@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Boss Port">
+<title>Boss Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070e1a;--bg2:#0d1829;--bg3:#111d2c;--border:#1e2e45;--text:#e8edf5;--muted:#7b8fa1;--dim:#4a5e78;--green:#00e5a0;--blue:#00bfff;--yellow:#f5c518;--purple:#a78bfa;--orange:#ff6b35;--red:#ff4f4f}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Thai',sans-serif;overflow-x:hidden}
+body{padding-bottom:env(safe-area-inset-bottom)}
+.header{background:linear-gradient(180deg,#0a1525 0%,var(--bg) 100%);padding:52px 18px 12px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start}
+.header-label{color:var(--green);font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
+.header-value{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;letter-spacing:-1px}
+.header-pnl{text-align:right}
+.header-pnl-val{font-family:'DM Mono',monospace;font-weight:700;font-size:16px}
+.header-sub{font-size:11px;color:var(--dim);margin-top:2px}
+.live-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.live-badge{font-size:10px;color:var(--dim)}
+.refresh-btn{font-size:11px;color:var(--blue);background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:4px 12px;cursor:pointer;font-family:'IBM Plex Sans Thai',sans-serif}
+.tabs{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;background:var(--bg);position:sticky;top:110px;z-index:99;border-bottom:1px solid var(--border)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:7px 14px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid var(--border);color:var(--muted);background:var(--bg2);white-space:nowrap;cursor:pointer;transition:all .15s;font-family:'IBM Plex Sans Thai',sans-serif}
+.tab.active{background:var(--green);color:var(--bg);border-color:var(--green)}
+.content{padding:14px 14px 80px}
+.section{display:none;animation:fu .3s ease both}
+.section.active{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.card-pad{padding:16px}
+.card-title{font-weight:600;font-size:13px;margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:13px 11px}
+.sum-label{color:var(--dim);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.sum-val{font-family:'DM Mono',monospace;font-weight:700;font-size:13px}
+.sum-sub{color:var(--dim);font-size:10px;margin-top:3px}
+.alloc-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.alloc-legend{flex:1;min-width:140px}
+.legend-row{margin-bottom:9px}
+.legend-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.legend-bar{height:4px;background:var(--bg3);border-radius:99px;position:relative}
+.legend-fill{height:100%;border-radius:99px;transition:width .8s}
+.legend-mark{position:absolute;top:-3px;width:2px;height:10px;background:#fff4;border-radius:1px}
+.holding{border-bottom:1px solid var(--bg3)}
+.holding:last-child{border-bottom:none}
+.holding-main{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;gap:10px;cursor:pointer}
+.holding-left{flex:1}
+.holding-sym{font-family:'DM Mono',monospace;font-weight:700;color:var(--blue);font-size:14px}
+.holding-name{color:var(--dim);font-size:11px;margin-top:2px}
+.holding-right{text-align:right}
+.holding-val{font-family:'DM Mono',monospace;font-weight:700;font-size:14px}
+.holding-pnl{font-size:12px;margin-top:2px}
+.holding-detail{padding:12px 16px;background:var(--bg);border-top:1px solid var(--bg3);display:none}
+.holding-detail.open{display:block}
+.d2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.detail-item{background:var(--bg2);border-radius:10px;padding:9px 11px}
+.detail-label{color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.detail-val{font-family:'DM Mono',monospace;font-weight:600;font-size:12px}
+.pill{display:inline-block;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;margin-left:6px}
+.rebrow{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bg3)}
+.rebrow:last-child{border-bottom:none;margin-bottom:0}
+.reb-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.reb-sym{font-family:'DM Mono',monospace;font-weight:700;font-size:15px}
+.reb-amt{font-family:'DM Mono',monospace;font-weight:700;font-size:18px;color:var(--green)}
+.reb-meta{display:flex;gap:8px;font-size:11px;color:var(--muted);margin-bottom:6px;align-items:center;flex-wrap:wrap}
+.reb-bar{height:7px;background:var(--bg3);border-radius:99px;position:relative}
+.reb-fill{height:100%;border-radius:99px;opacity:.75}
+.reb-end{position:absolute;top:-2px;right:0;width:2px;height:11px;border-radius:1px;opacity:.5}
+.reb-foot{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px}
+.entry-row{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bg3)}
+.entry-sym{font-family:'DM Mono',monospace;font-weight:700;font-size:14px;margin-bottom:8px}
+.zones{display:flex;gap:7px;flex-wrap:wrap}
+.zone{border-radius:8px;padding:6px 11px}
+.zone-lbl{font-size:10px;color:var(--muted)}
+.zone-price{font-family:'DM Mono',monospace;font-weight:700;font-size:13px}
+.rule-row{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.g3b{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.dca-item{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
+.dca-amt{font-family:'DM Mono',monospace;font-weight:700;font-size:14px}
+.mkt-row{background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.mkt-pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.mkt-pill{border-radius:8px;padding:6px 12px}
+.realized-card{background:var(--bg);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.realized-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.g3s{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.stat-item{background:var(--bg2);border-radius:8px;padding:8px 9px}
+.stat-label{color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.stat-val{font-family:'DM Mono',monospace;font-weight:700;font-size:11px}
+.tx-filters{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.txf{padding:5px 12px;border-radius:99px;font-size:11px;font-weight:600;border:1px solid var(--border);color:var(--dim);background:transparent;cursor:pointer;font-family:'IBM Plex Sans Thai',sans-serif}
+.txf.active{background:var(--bg3);color:var(--text);border-color:#2a3e58}
+.tx-item{padding:12px 16px;border-bottom:1px solid #111d2c}
+.tx-item:last-child{border-bottom:none}
+.tx-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tx-left{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tx-sym{font-family:'DM Mono',monospace;font-weight:700;font-size:14px}
+.tx-cat{background:var(--bg3);color:var(--muted);border-radius:4px;padding:1px 6px;font-size:10px}
+.tx-amt{font-family:'DM Mono',monospace;font-weight:700;font-size:13px;text-align:right;flex-shrink:0}
+.tx-detail{color:var(--dim);font-size:11px;margin-top:3px}
+.tx-date-hdr{padding:8px 16px 4px;background:var(--bg);color:var(--dim);font-size:11px;border-top:1px solid #111d2c}
+.sum-box{background:var(--bg);border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid #00e5a020}
+.sum-box-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sum-box-item{background:var(--bg2);border-radius:10px;padding:10px 12px}
+.bottom-safe{height:calc(20px + env(safe-area-inset-bottom))}
+.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+  <div style="color:var(--muted);font-size:13px">กำลังโหลดราคาหุ้น...</div>
+</div>
+
+<div id="app" style="display:none">
+
+<div class="header">
+  <div class="header-label">Boss Portfolio · Dime!</div>
+  <div class="header-top">
+    <div>
+      <div class="header-value" id="h-total"></div>
+      <div class="header-sub" id="h-sub">มูลค่ารวม · ทุน ฿110,000</div>
+    </div>
+    <div class="header-pnl">
+      <div class="header-pnl-val" id="h-pnl"></div>
+      <div class="header-sub" id="h-pct"></div>
+    </div>
+  </div>
+  <div class="live-row">
+    <span class="live-badge" id="live-badge">⟳ กำลังโหลด...</span>
+    <button class="refresh-btn" onclick="doFetch()">↻ รีเฟรช</button>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="overview">📊 ภาพรวม</div>
+  <div class="tab" data-tab="holdings">💼 พอร์ต</div>
+  <div class="tab" data-tab="rebalance">⚖️ ปรับพอร์ต</div>
+  <div class="tab" data-tab="history">📋 ธุรกรรม</div>
+  <div class="tab" data-tab="strategy">🎯 กลยุทธ์</div>
+</div>
+
+<div class="content">
+  <div class="section active" id="sec-overview">
+    <div class="g3" id="sum-grid"></div>
+    <div class="card card-pad">
+      <div class="card-title">Allocation ปัจจุบัน vs เป้าหมาย</div>
+      <div class="alloc-wrap">
+        <svg id="donut" viewBox="0 0 120 120" width="110" height="110" style="flex-shrink:0"></svg>
+        <div class="alloc-legend" id="alloc-legend"></div>
+      </div>
+    </div>
+    <div class="card card-pad">
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div>
+          <div style="color:var(--dim);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">🔵 ฐาน 75%</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill" style="background:#00bfff18;border:1px solid #00bfff44;color:#00bfff">S&P500 55%</span>
+            <span class="pill" style="background:#00bfff18;border:1px solid #00bfff44;color:#00bfff">MSFT 10%</span>
+            <span class="pill" style="background:#00bfff18;border:1px solid #00bfff44;color:#00bfff">LLY 10%</span>
+          </div>
+        </div>
+        <div style="border-left:1px solid var(--border);padding-left:14px">
+          <div style="color:var(--dim);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">🔴 เร่ง 25%</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="pill" style="background:#ff6b3518;border:1px solid #ff6b3544;color:#ff6b35">QQQM 12%</span>
+            <span class="pill" style="background:#ff6b3518;border:1px solid #ff6b3544;color:#ff6b35">NVDA 10%</span>
+            <span class="pill" style="background:#4a5e7818;border:1px solid #4a5e7844;color:#7b8fa1">Cash 3%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec-holdings">
+    <div class="card" id="holdings-list"></div>
+  </div>
+
+  <div class="section" id="sec-rebalance">
+    <div class="sum-box">
+      <div style="font-weight:600;font-size:13px;margin-bottom:12px">💰 สรุปการปรับพอร์ต</div>
+      <div class="sum-box-grid" id="reb-summary"></div>
+      <div id="reb-note" style="margin-top:10px;border-radius:10px;padding:10px 13px;font-size:12px;color:#7b8fa1;background:#00e5a010;border:1px solid #00e5a030"></div>
+    </div>
+    <div class="card card-pad"><div class="card-title" style="color:var(--green)" id="reb-buy-title"></div><div id="reb-buy-list"></div></div>
+    <div class="card card-pad" id="reb-sell-wrap" style="display:none"><div class="card-title" style="color:var(--yellow)">⚠️ เกินเป้า</div><div id="reb-sell-list"></div></div>
+    <div class="card card-pad"><div class="card-title" style="color:var(--muted)">✅ ใกล้เป้าแล้ว</div><div id="reb-ok-list"></div></div>
+  </div>
+
+  <div class="section" id="sec-history">
+    <div class="card card-pad" style="margin-bottom:12px">
+      <div style="font-weight:600;font-size:13px;margin-bottom:12px">💰 Realized P&L — ปิดสถานะแล้ว</div>
+      <div class="realized-card">
+        <div class="realized-top">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:16px;color:var(--yellow)">CPALL</div>
+            <div style="color:var(--dim);font-size:11px;margin-top:2px">หุ้นไทย · ปิดสถานะแล้ว</div>
+          </div>
+          <div>
+            <div id="cpall-pnl" style="font-family:'DM Mono',monospace;font-weight:700;font-size:20px;text-align:right"></div>
+            <div id="cpall-pct" style="font-size:12px;margin-top:2px;text-align:right"></div>
+          </div>
+        </div>
+        <div class="g3s" id="cpall-stats"></div>
+      </div>
+    </div>
+    <div class="tx-filters" id="tx-filters">
+      <button class="txf active" data-f="ทั้งหมด">ทั้งหมด</button>
+      <button class="txf" data-f="กองทุนรวม">กองทุนรวม</button>
+      <button class="txf" data-f="หุ้น US">หุ้น US</button>
+      <button class="txf" data-f="หุ้นไทย">หุ้นไทย</button>
+    </div>
+    <div class="card" id="tx-list"></div>
+  </div>
+
+  <div class="section" id="sec-strategy">
+    <div class="card card-pad" style="margin-bottom:12px">
+      <div class="card-title">🎯 จุดเข้าซื้อ</div>
+      <div id="entry-list"></div>
+    </div>
+    <div class="card card-pad" style="margin-bottom:12px">
+      <div class="card-title">🧠 กฎทอง</div>
+      <div class="rule-row"><span style="font-size:18px">🔴</span><span style="flex:1;margin-left:12px;font-size:14px">ตลาดแดง</span><span style="font-family:'DM Mono',monospace;font-weight:700;color:var(--green)">= ซื้อ</span></div>
+      <div class="rule-row"><span style="font-size:18px">🟢</span><span style="flex:1;margin-left:12px;font-size:14px">ตลาดเขียว</span><span style="font-family:'DM Mono',monospace;font-weight:700;color:var(--yellow)">= รอ</span></div>
+    </div>
+    <div class="card card-pad">
+      <div class="card-title">💰 DCA 15,000 ฿/เดือน</div>
+      <div class="g3b">
+        <div class="dca-item"><div class="dca-amt" style="color:var(--green)">฿8,000</div><div style="font-size:11px;margin-top:3px">S&P500</div><div style="font-size:10px;color:var(--dim);margin-top:2px">ตายตัว</div></div>
+        <div class="dca-item"><div class="dca-amt" style="color:var(--yellow)">฿5,000</div><div style="font-size:11px;margin-top:3px">หุ้นรายตัว</div><div style="font-size:10px;color:var(--dim);margin-top:2px">ตามจังหวะ</div></div>
+        <div class="dca-item"><div class="dca-amt" style="color:var(--dim)">฿2,000</div><div style="font-size:11px;margin-top:3px">Cash</div><div style="font-size:10px;color:var(--dim);margin-top:2px">สำรอง</div></div>
+      </div>
+      <div class="mkt-row">
+        <div style="font-weight:700;font-size:12px;color:var(--red)">📉 ตลาดลง → ใช้ 5,000 ซื้อ</div>
+        <div class="mkt-pills">
+          <div class="mkt-pill" style="background:#ff4f4f12;border:1px solid #ff4f4f30"><div style="font-family:'DM Mono',monospace;font-weight:700;font-size:13px;color:var(--yellow)">QQQM</div><div style="font-size:11px;color:var(--muted)">฿2,500</div></div>
+          <div class="mkt-pill" style="background:#ff4f4f12;border:1px solid #ff4f4f30"><div style="font-family:'DM Mono',monospace;font-weight:700;font-size:13px;color:var(--orange)">NVDA</div><div style="font-size:11px;color:var(--muted)">฿2,500</div></div>
+        </div>
+      </div>
+      <div class="mkt-row">
+        <div style="font-weight:700;font-size:12px;color:var(--green)">📈 ตลาดขึ้น → ใช้ 5,000 ซื้อ</div>
+        <div class="mkt-pills">
+          <div class="mkt-pill" style="background:#00e5a012;border:1px solid #00e5a030"><div style="font-family:'DM Mono',monospace;font-weight:700;font-size:13px;color:var(--blue)">MSFT</div><div style="font-size:11px;color:var(--muted)">฿2,500</div></div>
+          <div class="mkt-pill" style="background:#00e5a012;border:1px solid #00e5a030"><div style="font-family:'DM Mono',monospace;font-weight:700;font-size:13px;color:var(--purple)">LLY</div><div style="font-size:11px;color:var(--muted)">฿2,500</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bottom-safe"></div>
+</div>
+
+<script>
+// ══ CONFIG ════════════════════════════════════════════════════════════════════
+const SHEETS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4mGkAxTM__JUoQHUstULI-fdo7yTO-PJlg-uzLQs4cGVerezZVizXKcd9dYL8JgFja2elaC00snGk/pub?gid=114958669&single=true&output=csv";
+const TOTAL_COST = 110000;
+const CASH_THB   = 48745.81;
+const USD_THB    = 32.24;
+// จำนวนหน่วย/หุ้น — อัปเดตตอน DCA
+const SH = { LLY:0.3483213, MSFT:0.5160961, QQQM:0.5791213, NVDA:0.4652285 };
+const KKP_U = 2430.8228, SCB_U = 146.3886;
+// ต้นทุน
+// ต้นทุน THB = ราคาเฉลี่ย(USD) x หุ้น x 32.24
+const COST_THB = { CASH:CASH_THB, SP500:34999.99, LLY:9912.51, MSFT:6943.53, QQQM:5003.33, NVDA:3014.76 };
+
+// ราคา fallback
+// ราคาหุ้น USD (fallback = ราคาล่าสุดที่รู้)
+let P = { LLY:883.96, MSFT:424.62, QQQM:273.38, NVDA:208.27, KKP:12.3588, SCB:36.3367 };
+
+const TARGETS = [
+  {key:"SP500",label:"S&P 500",pct:55,color:"#00e5a0",sub:"KKP+SCBAM"},
+  {key:"MSFT", label:"MSFT",   pct:10,color:"#00bfff",sub:"Microsoft"},
+  {key:"LLY",  label:"LLY",   pct:10,color:"#a78bfa",sub:"Eli Lilly"},
+  {key:"QQQM", label:"QQQM",  pct:12,color:"#f5c518",sub:"NASDAQ 100"},
+  {key:"NVDA", label:"NVDA",  pct:10,color:"#ff6b35",sub:"NVIDIA"},
+  {key:"CASH", label:"Cash",  pct:3, color:"#4a5e78",sub:"เงินสำรอง"},
+];
+
+const TRANSACTIONS = [
+  {date:"25 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"999.80 ฿",cancel:true},
+  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"2,999.80 ฿",price:"890.85",units:"0.1035"},
+  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"3,999.85 ฿",price:"874.99",units:"0.1407"},
+  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"92.33 USD",price:"884.98",units:"0.1042"},
+  {date:"24 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"18,000 ฿",price:"45.00",units:"400"},
+  {date:"23 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"18,000 ฿",price:"45.00",units:"400"},
+  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"3,999.72 ฿",price:"415.996",units:"0.2957"},
+  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"2,999.78 ฿",price:"419.064",units:"0.2204"},
+  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"QQQM",cat:"หุ้น US",display:"61.95 USD",price:"269.51",units:"0.2295"},
+  {date:"22 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"22,875 ฿",price:"45.75",units:"500"},
+  {date:"22 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
+  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
+  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"93.66 USD",price:"200.998",units:"0.4652"},
+  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"QQQM",cat:"หุ้น US",display:"2,999.95 ฿",price:"266.97",units:"0.3496"},
+  {date:"19 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"22,125 ฿",price:"44.25",units:"500"},
+  {date:"16 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"18,500 ฿",price:"46.25",units:"400"},
+  {date:"10 เม.ย. 69",type:"ซื้อ",sym:"SCBS&P500A",cat:"กองทุนรวม",display:"2,500 ฿",price:"34.9779",units:"71.47"},
+  {date:"26 มี.ค. 69",type:"ซื้อ",sym:"SCBS&P500A",cat:"กองทุนรวม",display:"2,500 ฿",price:"33.3712",units:"74.91"},
+  {date:"5 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"19,300 ฿",price:"48.25",units:"400"},
+];
+
+const cpallCost=22125+18500+19300, cpallRev=18000+18000+22875;
+const cpallPnL=cpallRev-cpallCost, cpallPct=cpallPnL/cpallCost*100;
+const cpallU=1300, cpallAvgB=cpallCost/cpallU, cpallAvgS=cpallRev/cpallU;
+
+const fmt  = (n,d=0)=>Number(n).toLocaleString("th-TH",{maximumFractionDigits:d});
+const fmtE = (n,d=2)=>Number(n).toLocaleString("en",{maximumFractionDigits:d});
+const sign = n=>n>=0?"▲ +":"▼ ";
+const clr  = n=>n>=0?"#00e5a0":"#ff4f4f";
+
+// ══ ASSETS calc ═══════════════════════════════════════════════════════════════
+function getAssets(){
+  return {
+    CASH:  CASH_THB,
+    SP500: P.KKP*KKP_U + P.SCB*SCB_U,
+    MSFT:  P.MSFT*SH.MSFT*USD_THB,
+    LLY:   P.LLY *SH.LLY *USD_THB,
+    QQQM:  P.QQQM*SH.QQQM*USD_THB,
+    NVDA:  P.NVDA*SH.NVDA*USD_THB,
+  };
+}
+
+// ══ FETCH CSV ═════════════════════════════════════════════════════════════════
+function parseCSV(txt){
+  const rows = txt.trim().split("\n").map(r=>r.split(",").map(c=>c.replace(/^"|"$/g,"")));
+  // Sheet layout (0-indexed): row5=LLY,6=MSFT,7=QQQM,8=NVDA | col2=price
+  //                            row12=KKP,13=SCBAM             | col2=NAV
+  const p=(ri,ci=2)=>{ const v=parseFloat(rows[ri]?.[ci]); return isNaN(v)?0:v; };
+  if(p(5))  P.LLY  = p(5);
+  if(p(6))  P.MSFT = p(6);
+  if(p(7))  P.QQQM = p(7);
+  if(p(8))  P.NVDA = p(8);
+  if(p(12)) P.KKP  = p(12);
+  if(p(13)) P.SCB  = p(13);
+}
+
+async function doFetch(){
+  const badge = document.getElementById("live-badge");
+  badge.textContent="⟳ กำลังโหลด..."; badge.style.color="#f5c518";
+  try{
+    const PROXY = "https://corsproxy.io/?";
+    const res = await fetch(PROXY + encodeURIComponent(SHEETS_CSV+"&t="+Date.now()));
+    if(!res.ok) throw new Error(res.status);
+    parseCSV(await res.text());
+    const now=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"});
+    badge.textContent="✅ Live · "+now; badge.style.color="#00e5a0";
+  }catch(e){
+    badge.textContent="⚠️ Offline · ใช้ราคาเดิม"; badge.style.color="#ff6b35";
+  }
+  renderAll();
+}
+
+// ══ RENDER ════════════════════════════════════════════════════════════════════
+function renderAll(){
+  const A = getAssets();
+  const TOT = Object.values(A).reduce((s,v)=>s+v,0);
+  const PNL = TOT - TOTAL_COST;
+  const PCT = PNL/TOTAL_COST*100;
+
+  // Header
+  document.getElementById("h-total").textContent = "฿"+fmt(TOT);
+  document.getElementById("h-sub").textContent = "มูลค่ารวม · ทุน ฿"+fmt(TOTAL_COST)+" · 1 USD = "+USD_THB;
+  const pe=document.getElementById("h-pnl"); pe.textContent=sign(PNL)+"฿"+fmt(Math.abs(PNL)); pe.style.color=clr(PNL);
+  const pc=document.getElementById("h-pct"); pc.textContent=(PCT>=0?"+":"")+PCT.toFixed(2)+"% จากทุน"; pc.style.color=clr(PNL)+"99";
+
+  // Summary 3 cards
+  const usVal = A.MSFT+A.LLY+A.QQQM+A.NVDA;
+  document.getElementById("sum-grid").innerHTML=[
+    {l:"เงินสด",        v:"฿"+fmt(A.CASH),   c:"#e2f4ff", sub:((A.CASH/TOT)*100).toFixed(1)+"% ของพอร์ต"},
+    {l:"กองทุน S&P500", v:"฿"+fmt(A.SP500),  c:"#00bfff", sub:((A.SP500/TOT)*100).toFixed(1)+"% ของพอร์ต"},
+    {l:"หุ้น US (USD)",  v:"$"+fmtE(usVal/USD_THB), c:"#a78bfa", sub:((usVal/TOT)*100).toFixed(1)+"% ของพอร์ต"},
+  ].map(c=>`<div class="sum-card"><div class="sum-label">${c.l}</div><div class="sum-val" style="color:${c.c}">${c.v}</div><div class="sum-sub">${c.sub}</div></div>`).join("");
+
+  // Rebalance calc
+  const RB = TARGETS.map(t=>{
+    const cur=A[t.key]||0, tgt=t.pct/100*TOT;
+    return {...t,cur,tgt,diff:tgt-cur,curPct:cur/TOT*100,dPct:t.pct-cur/TOT*100};
+  });
+
+  // Donut
+  const svg=document.getElementById("donut"); svg.innerHTML="";
+  let cum=0; const r=50,cx=60,cy=60, rad=a=>(a-90)*Math.PI/180;
+  RB.forEach(d=>{
+    const s=(cum/100)*360; cum+=d.curPct; const e=(cum/100)*360;
+    const [x1,y1]=[cx+r*Math.cos(rad(s)),cy+r*Math.sin(rad(s))];
+    const [x2,y2]=[cx+r*Math.cos(rad(e)),cy+r*Math.sin(rad(e))];
+    const p=document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d",`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${e-s>180?1:0} 1 ${x2} ${y2} Z`);
+    p.setAttribute("fill",d.color);p.setAttribute("opacity","0.85");svg.appendChild(p);
+  });
+  ["circle","text","text"].forEach((tag,i)=>{
+    const el=document.createElementNS("http://www.w3.org/2000/svg",tag);
+    if(i===0){el.setAttribute("cx",cx);el.setAttribute("cy",cy);el.setAttribute("r","32");el.setAttribute("fill","#070e1a");}
+    else if(i===1){el.setAttribute("x",cx);el.setAttribute("y",cy-4);el.setAttribute("text-anchor","middle");el.setAttribute("fill","#7b8fa1");el.setAttribute("font-size","8");el.setAttribute("font-family","'DM Mono',monospace");el.textContent="รวม";}
+    else{el.setAttribute("x",cx);el.setAttribute("y",cy+9);el.setAttribute("text-anchor","middle");el.setAttribute("fill","#e8edf5");el.setAttribute("font-size","10");el.setAttribute("font-weight","bold");el.setAttribute("font-family","'DM Mono',monospace");el.textContent="฿"+fmt(Math.round(TOT/1000))+"k";}
+    svg.appendChild(el);
+  });
+  document.getElementById("alloc-legend").innerHTML=RB.map(r=>`<div class="legend-row"><div class="legend-top"><span style="color:#c0cfe0">${r.label}</span><span style="font-family:'DM Mono',monospace;color:${r.color}">${r.curPct.toFixed(1)}% <span style="color:#4a5e78">/ ${r.pct}%</span></span></div><div class="legend-bar"><div class="legend-fill" style="width:${Math.min(r.cur/Math.max(r.tgt,r.cur)*100,100)}%;background:${r.color}"></div><div class="legend-mark" style="left:${Math.min(r.tgt/Math.max(r.tgt,r.cur)*100,100)}%"></div></div></div>`).join("");
+
+  // Holdings
+  const HOLD=[
+    {sym:"CASH",      name:"เงินสด · 3 บัญชี", layer:"—",   val:A.CASH,  cost:COST_THB.CASH, det:null},
+    {sym:"KKP US500", name:"S&P500 (KKP)",      layer:"ฐาน", val:P.KKP*KKP_U, cost:30000, det:{หน่วยคงเหลือ:fmtE(KKP_U,4),NAV_ปัจจุบัน:"฿"+P.KKP.toFixed(4),ต้นทุน_NAV:"฿12.3415",ต้นทุนรวม:"฿30,000"}},
+    {sym:"SCBS&P500A",name:"S&P500 (SCBAM)",    layer:"ฐาน", val:P.SCB*SCB_U,  cost:4999.99, det:{หน่วยคงเหลือ:fmtE(SCB_U,4),NAV_ปัจจุบัน:"฿"+P.SCB.toFixed(4),ต้นทุน_NAV:"฿34.1556",ต้นทุนรวม:"฿4,999.99"}},
+    {sym:"MSFT",      name:"Microsoft",          layer:"ฐาน", val:A.MSFT, cost:COST_THB.MSFT, det:{หุ้นคงเหลือ:fmtE(SH.MSFT,7),ราคาปัจจุบัน:"$"+fmtE(P.MSFT,2),ต้นทุน_หุ้น:"$417.3060",ต้นทุนรวม:"$215.37"}},
+    {sym:"LLY",       name:"Eli Lilly",          layer:"ฐาน", val:A.LLY,  cost:COST_THB.LLY,  det:{หุ้นคงเหลือ:fmtE(SH.LLY,7),ราคาปัจจุบัน:"$"+fmtE(P.LLY,2),ต้นทุน_หุ้น:"$882.6908",ต้นทุนรวม:"$307.46"}},
+    {sym:"QQQM",      name:"Invesco NASDAQ 100", layer:"เร่ง",val:A.QQQM, cost:COST_THB.QQQM, det:{หุ้นคงเหลือ:fmtE(SH.QQQM,7),ราคาปัจจุบัน:"$"+fmtE(P.QQQM,2),ต้นทุน_หุ้น:"$267.9750",ต้นทุนรวม:"$155.19"}},
+    {sym:"NVDA",      name:"NVIDIA",             layer:"เร่ง",val:A.NVDA, cost:COST_THB.NVDA, det:{หุ้นคงเหลือ:fmtE(SH.NVDA,7),ราคาปัจจุบัน:"$"+fmtE(P.NVDA,2),ต้นทุน_หุ้น:"$200.9980",ต้นทุนรวม:"$93.51"}},
+  ];
+  document.getElementById("holdings-list").innerHTML=HOLD.map((h,i)=>{
+    const pnl=h.val-h.cost, pp=pnl/h.cost*100;
+    const lc=h.layer==="ฐาน"?"#00bfff":h.layer==="เร่ง"?"#ff6b35":"#4a5e78";
+    const det=h.det?`<div class="holding-detail" id="hd${i}"><div class="d2">${Object.entries(h.det).map(([k,v])=>`<div class="detail-item"><div class="detail-label">${k}</div><div class="detail-val">${v}</div></div>`).join("")}</div></div>`:"";
+    return `<div class="holding"><div class="holding-main" onclick="toggleH(${i})"><div class="holding-left"><div style="display:flex;align-items:center"><span class="holding-sym">${h.sym}</span>${h.layer!=="—"?`<span class="pill" style="background:${lc}18;border:1px solid ${lc}44;color:${lc}">${h.layer}</span>`:""}</div><div class="holding-name">${h.name}</div></div><div class="holding-right"><div class="holding-val">฿${fmt(h.val)}</div><div class="holding-pnl" style="color:${clr(pnl)}">${sign(pnl)}฿${fmt(Math.abs(pnl))} (${pp>=0?"+":""}${pp.toFixed(2)}%)</div></div></div>${det}</div>`;
+  }).join("");
+
+  // Rebalance
+  const BUY=RB.filter(r=>r.diff>100).sort((a,b)=>b.diff-a.diff);
+  const SELL=RB.filter(r=>r.diff<-100);
+  const OK=RB.filter(r=>Math.abs(r.diff)<=100);
+  const tBuy=BUY.reduce((s,r)=>s+r.diff,0), cashAft=A.CASH-tBuy;
+  document.getElementById("reb-summary").innerHTML=[
+    {l:"มูลค่าพอร์ตรวม",v:"฿"+fmt(TOT),c:"#e8edf5"},
+    {l:"เงินสดปัจจุบัน",v:"฿"+fmt(A.CASH),c:"#4a5e78"},
+    {l:"ต้องซื้อเพิ่มรวม",v:"฿"+fmt(Math.round(tBuy)),c:"#00e5a0"},
+    {l:"เงินสดหลังปรับ",v:"฿"+fmt(Math.round(cashAft)),c:cashAft>=0?"#f5c518":"#ff4f4f"},
+  ].map(c=>`<div class="sum-box-item"><div style="color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">${c.l}</div><div style="font-family:'DM Mono',monospace;font-weight:700;font-size:14px;color:${c.c}">${c.v}</div></div>`).join("");
+  document.getElementById("reb-note").innerHTML=`💡 เงินสดมี <b style="color:var(--yellow)">฿${fmt(A.CASH)}</b> ${cashAft>=0?"<b style='color:var(--green)'>เพียงพอ</b>ปรับพอร์ตในครั้งเดียว":"ไม่พอปรับในครั้งเดียว แนะนำ DCA ทีละเดือน"} หลังปรับเหลือ Cash ≈ <b style="color:var(--yellow)">฿${fmt(Math.round(cashAft))}</b>`;
+  document.getElementById("reb-buy-title").textContent=`📈 ต้องซื้อเพิ่ม (${BUY.length} รายการ)`;
+  document.getElementById("reb-buy-list").innerHTML=BUY.map((r,i)=>`<div class="rebrow" ${i===BUY.length-1?"style='border:none;margin:0;padding-bottom:0'":""}><div class="reb-top"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="reb-sym" style="color:${r.color}">${r.label}</span><span style="color:var(--dim);font-size:11px">${r.sub}</span></div><div class="reb-meta"><span>มี <b style="color:${r.color}">${r.curPct.toFixed(1)}%</b></span><span>→</span><span>เป้า <b style="color:${r.color}">${r.pct}%</b></span><span style="background:${r.color}15;border:1px solid ${r.color}30;color:${r.color};border-radius:6px;padding:1px 7px;font-size:10px;font-weight:700">+${r.dPct.toFixed(1)}%</span></div></div><div style="text-align:right"><div class="reb-amt">+฿${fmt(Math.round(r.diff))}</div>${r.key!=="SP500"&&r.key!=="CASH"?`<div style="color:var(--dim);font-size:11px;margin-top:2px">≈ $${fmtE(r.diff/USD_THB,0)} USD</div>`:""}</div></div><div class="reb-bar"><div class="reb-fill" style="width:${Math.min(r.cur/r.tgt*100,100)}%;background:${r.color}"></div><div class="reb-end" style="background:${r.color}"></div></div><div class="reb-foot"><span>มีอยู่ ฿${fmt(Math.round(r.cur))}</span><span>เป้า ฿${fmt(Math.round(r.tgt))}</span></div></div>`).join("");
+  if(SELL.length){document.getElementById("reb-sell-wrap").style.display="block";document.getElementById("reb-sell-list").innerHTML=SELL.map(r=>`<div style="background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1px solid #f5c51830"><div style="display:flex;justify-content:space-between;align-items:center"><div><span style="font-family:'DM Mono',monospace;font-weight:700;color:${r.color}">${r.label}</span><div style="font-size:11px;color:var(--muted);margin-top:3px">มี ${r.curPct.toFixed(1)}% → เป้า ${r.pct}%</div></div><div style="color:var(--yellow);font-family:'DM Mono',monospace;font-weight:700">−฿${fmt(Math.round(Math.abs(r.diff)))}</div></div></div>`).join("");}
+  document.getElementById("reb-ok-list").innerHTML=OK.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:10px;padding:10px 13px;margin-bottom:7px"><div><span style="font-family:'DM Mono',monospace;font-weight:700;color:${r.color}">${r.label}</span><span style="color:var(--dim);font-size:11px;margin-left:8px">${r.curPct.toFixed(1)}% / เป้า ${r.pct}%</span></div><span class="pill" style="background:#7b8fa118;border:1px solid #7b8fa144;color:#7b8fa1">✓ OK</span></div>`).join("");
+}
+
+function toggleH(i){const d=document.getElementById("hd"+i);if(d)d.classList.toggle("open");}
+
+// CPALL (static)
+const cpallPnL2=cpallRev-cpallCost, cpallPct2=cpallPnL2/cpallCost*100;
+const cpPnlEl=document.getElementById("cpall-pnl"); cpPnlEl.textContent=sign(cpallPnL2)+"฿"+fmt(Math.abs(cpallPnL2)); cpPnlEl.style.color=clr(cpallPnL2);
+const cpPctEl=document.getElementById("cpall-pct"); cpPctEl.textContent=(cpallPct2>=0?"+":"")+cpallPct2.toFixed(2)+"%"; cpPctEl.style.color=clr(cpallPnL2)+"99";
+document.getElementById("cpall-stats").innerHTML=[
+  {l:"ต้นทุนรวม",v:"฿"+fmt(cpallCost),c:"#7b8fa1"},{l:"รายได้รวม",v:"฿"+fmt(cpallRev),c:"#e8edf5"},
+  {l:"หุ้น",v:fmt(cpallU)+" หุ้น",c:"#7b8fa1"},{l:"ราคาเฉลี่ยซื้อ",v:"฿"+cpallAvgB.toFixed(2),c:"#7b8fa1"},
+  {l:"ราคาเฉลี่ยขาย",v:"฿"+cpallAvgS.toFixed(2),c:"#e8edf5"},{l:"กำไร/หุ้น",v:(cpallPnL2>=0?"+":"")+"฿"+(cpallPnL2/cpallU).toFixed(2),c:clr(cpallPnL2)},
+].map(({l,v,c})=>`<div class="stat-item"><div class="stat-label">${l}</div><div class="stat-val" style="color:${c}">${v}</div></div>`).join("");
+
+// TX filter
+let txF="ทั้งหมด";
+function renderTx(){
+  const list=TRANSACTIONS.filter(t=>txF==="ทั้งหมด"||t.cat===txF);
+  let html="",last="";
+  list.forEach(t=>{
+    if(t.date!==last){html+=`<div class="tx-date-hdr">${t.date}</div>`;last=t.date;}
+    const isSell=t.type==="ขาย", isC=t.cancel;
+    html+=`<div class="tx-item" style="${isC?"opacity:.45":""}"><div class="tx-top"><div class="tx-left"><span style="font-size:11px;font-weight:700;color:${isC?"#4a5e78":isSell?"var(--red)":"var(--green)"}">${t.type}</span><span class="tx-sym">${t.sym}</span><span class="tx-cat">${t.cat}</span>${isC?`<span class="pill" style="background:#4a5e7818;border:1px solid #4a5e7844;color:#4a5e78;margin-left:0">ยกเลิก</span>`:""}</div><span class="tx-amt" style="color:${isC?"#4a5e78":isSell?"var(--red)":"var(--green)"}">${isSell?"−":"+"}${t.display}</span></div>${!isC?`<div class="tx-detail">${t.price?"ราคา "+t.price+" · ":""}${t.units?t.units+" หน่วย/หุ้น":""}</div>`:""}</div>`;
+  });
+  document.getElementById("tx-list").innerHTML=html;
+}
+renderTx();
+document.getElementById("tx-filters").addEventListener("click",e=>{
+  const f=e.target.dataset.f;if(!f)return;
+  txF=f;document.querySelectorAll(".txf").forEach(b=>b.classList.toggle("active",b.dataset.f===f));renderTx();
+});
+
+// Entry zones
+document.getElementById("entry-list").innerHTML=[
+  {sym:"NVDA",color:"#ff6b35",zones:[{l:"🔥 Breakout",p:"$212–214"},{l:"Buy Zone 1",p:"$198–200"},{l:"Buy Zone 2",p:"$185–190"}]},
+  {sym:"QQQM",color:"#f5c518",zones:[{l:"Buy Zone 1",p:"$268–270"},{l:"Buy Zone 2",p:"$260–262"}]},
+  {sym:"LLY", color:"#a78bfa",zones:[{l:"Buy Zone 1",p:"$850–860"},{l:"Buy Zone 2",p:"$820–830"}]},
+  {sym:"MSFT",color:"#00bfff",zones:[{l:"Buy Zone 1",p:"$410–412"},{l:"Buy Zone 2",p:"$400–405"}]},
+  {sym:"S&P500",color:"#00e5a0",zones:[{l:"✔️ ซื้อได้เลย",p:"DCA ทุกเดือน"}]},
+].map((s,i,a)=>`<div class="entry-row" ${i===a.length-1?"style='border:none;margin:0;padding:0'":""}><div class="entry-sym" style="color:${s.color}">${s.sym}</div><div class="zones">${s.zones.map(z=>`<div class="zone" style="background:${s.color}12;border:1px solid ${s.color}40"><div class="zone-lbl">${z.l}</div><div class="zone-price" style="color:${s.color}">${z.p}</div></div>`).join("")}</div></div>`).join("");
+
+// Tabs
+document.getElementById("tabs").addEventListener("click",e=>{
+  const t=e.target.dataset.tab;if(!t)return;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("sec-"+t).classList.add("active");
+});
+
+// ══ INIT ══════════════════════════════════════════════════════════════════════
+(async()=>{
+  await doFetch();
+  document.getElementById("loading").style.display="none";
+  document.getElementById("app").style.display="block";
+})();
+</script>
+</body>
+</html>
