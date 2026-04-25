@@ -144,6 +144,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
   <div class="tab" data-tab="holdings">💼 พอร์ต</div>
   <div class="tab" data-tab="rebalance">⚖️ ปรับพอร์ต</div>
   <div class="tab" data-tab="history">📋 ธุรกรรม</div>
+  <div class="tab" data-tab="goal">🏆 เป้าหมาย</div>
   <div class="tab" data-tab="strategy">🎯 กลยุทธ์</div>
 </div>
 
@@ -218,6 +219,68 @@ body{padding-bottom:env(safe-area-inset-bottom)}
       <button class="txf" data-f="หุ้นไทย">หุ้นไทย</button>
     </div>
     <div class="card" id="tx-list"></div>
+  </div>
+
+
+  <div class="section" id="sec-goal">
+    <!-- HERO -->
+    <div style="background:linear-gradient(135deg,#0a2018 0%,#0d1829 100%);border:1px solid #00e5a040;border-radius:20px;padding:22px 16px;margin-bottom:12px;text-align:center">
+      <div style="color:var(--green);font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px">เป้าหมายพอร์ต</div>
+      <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:36px;color:var(--green);letter-spacing:-1px">฿1,000,000</div>
+      <div style="color:var(--muted);font-size:12px;margin-top:4px">ภายใน 3–4 ปี · DCA 15,000 ฿/เดือน</div>
+      <div style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px">
+          <span style="color:var(--muted)">ความคืบหน้า</span>
+          <span id="gp-pct" style="font-family:'DM Mono',monospace;color:var(--green);font-weight:700"></span>
+        </div>
+        <div style="height:10px;background:#1a2535;border-radius:99px;overflow:hidden">
+          <div id="gp-bar" style="height:100%;background:linear-gradient(90deg,#00e5a0,#00bfff);border-radius:99px;transition:width 1.2s ease;width:0%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-top:4px">
+          <span id="gp-cur"></span>
+          <span>฿1,000,000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px" id="gp-stats"></div>
+
+    <!-- PROJECTION CHART -->
+    <div class="card card-pad" style="margin-bottom:12px">
+      <div class="card-title">📈 Projection — เส้นทางสู่ 1 ล้าน</div>
+      <canvas id="gp-chart" height="160" style="width:100%"></canvas>
+      <div style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:3px;background:var(--green);border-radius:99px"></div><span style="font-size:11px;color:var(--muted)">10%/ปี</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:3px;background:var(--yellow);border-radius:99px"></div><span style="font-size:11px;color:var(--muted)">7%/ปี</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:3px;background:var(--red);border-radius:99px"></div><span style="font-size:11px;color:var(--muted)">เป้า ฿1M</span></div>
+      </div>
+    </div>
+
+    <!-- MILESTONES -->
+    <div class="card card-pad" style="margin-bottom:12px">
+      <div class="card-title">🏁 Milestones</div>
+      <div id="gp-milestones"></div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="card card-pad">
+      <div class="card-title">💡 Tips — ถึงเป้าเร็วขึ้น</div>
+      <div style="display:grid;gap:8px">
+        <div style="background:var(--bg);border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;flex-shrink:0">📅</span>
+          <div><div style="font-size:12px;font-weight:600;margin-bottom:2px">DCA สม่ำเสมอทุกเดือน</div><div style="font-size:11px;color:var(--muted)">หยุดแค่ 3 เดือน เป้าเลื่อนออกไปเกือบ 6 เดือนครับ</div></div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;flex-shrink:0">📉</span>
+          <div><div style="font-size:12px;font-weight:600;margin-bottom:2px">ตลาดลงคือโอกาส</div><div style="font-size:11px;color:var(--muted)">ใช้ Cash สำรองซื้อเพิ่มตอนแดง เร่งให้ถึงเป้าเร็วขึ้นครับ</div></div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:16px;flex-shrink:0">💰</span>
+          <div><div style="font-size:12px;font-weight:600;margin-bottom:2px">เพิ่ม DCA ได้ถ้ามีรายได้เพิ่ม</div><div style="font-size:11px;color:var(--muted)">DCA 20k/เดือน จะถึง 1M เร็วขึ้น ~8 เดือนครับ</div></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="section" id="sec-strategy">
@@ -436,6 +499,7 @@ function renderAll(){
   document.getElementById("reb-buy-list").innerHTML=BUY.map((r,i)=>`<div class="rebrow" ${i===BUY.length-1?"style='border:none;margin:0;padding-bottom:0'":""}><div class="reb-top"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="reb-sym" style="color:${r.color}">${r.label}</span><span style="color:var(--dim);font-size:11px">${r.sub}</span></div><div class="reb-meta"><span>มี <b style="color:${r.color}">${r.curPct.toFixed(1)}%</b></span><span>→</span><span>เป้า <b style="color:${r.color}">${r.pct}%</b></span><span style="background:${r.color}15;border:1px solid ${r.color}30;color:${r.color};border-radius:6px;padding:1px 7px;font-size:10px;font-weight:700">+${r.dPct.toFixed(1)}%</span></div></div><div style="text-align:right"><div class="reb-amt">+฿${fmt(Math.round(r.diff))}</div>${r.key!=="SP500"&&r.key!=="CASH"?`<div style="color:var(--dim);font-size:11px;margin-top:2px">≈ $${fmtE(r.diff/USD_THB,0)} USD</div>`:""}</div></div><div class="reb-bar"><div class="reb-fill" style="width:${Math.min(r.cur/r.tgt*100,100)}%;background:${r.color}"></div><div class="reb-end" style="background:${r.color}"></div></div><div class="reb-foot"><span>มีอยู่ ฿${fmt(Math.round(r.cur))}</span><span>เป้า ฿${fmt(Math.round(r.tgt))}</span></div></div>`).join("");
   if(SELL.length){document.getElementById("reb-sell-wrap").style.display="block";document.getElementById("reb-sell-list").innerHTML=SELL.map(r=>`<div style="background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1px solid #f5c51830"><div style="display:flex;justify-content:space-between;align-items:center"><div><span style="font-family:'DM Mono',monospace;font-weight:700;color:${r.color}">${r.label}</span><div style="font-size:11px;color:var(--muted);margin-top:3px">มี ${r.curPct.toFixed(1)}% → เป้า ${r.pct}%</div></div><div style="color:var(--yellow);font-family:'DM Mono',monospace;font-weight:700">−฿${fmt(Math.round(Math.abs(r.diff)))}</div></div></div>`).join("");}
   document.getElementById("reb-ok-list").innerHTML=OK.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:10px;padding:10px 13px;margin-bottom:7px"><div><span style="font-family:'DM Mono',monospace;font-weight:700;color:${r.color}">${r.label}</span><span style="color:var(--dim);font-size:11px;margin-left:8px">${r.curPct.toFixed(1)}% / เป้า ${r.pct}%</span></div><span class="pill" style="background:#7b8fa118;border:1px solid #7b8fa144;color:#7b8fa1">✓ OK</span></div>`).join("");
+  initGoal(TOT);
 }
 
 function toggleH(i){const d=document.getElementById("hd"+i);if(d)d.classList.toggle("open");}
@@ -492,5 +556,96 @@ document.getElementById("tabs").addEventListener("click",e=>{
   document.getElementById("app").style.display="block";
 })();
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+let gpInited = false;
+
+function initGoal(totalPort) {
+  if (gpInited) return;
+  gpInited = true;
+
+  const GOAL = 1000000, DCA_M = 15000;
+
+  function project(rate, months) {
+    const r = rate/12, pts = [totalPort];
+    for (let m=1; m<=months; m++) pts.push(Math.round(pts[m-1]*(1+r)+DCA_M));
+    return pts;
+  }
+  function monthsTo(target, rate) {
+    const r = rate/12; let p = totalPort;
+    for (let m=1; m<=120; m++) { p = p*(1+r)+DCA_M; if(p>=target) return m; }
+    return 120;
+  }
+
+  const MONTHS = 60;
+  const p10 = project(0.10, MONTHS);
+  const p7  = project(0.07, MONTHS);
+  const pct = Math.min(totalPort/GOAL*100, 100);
+  const m10 = monthsTo(GOAL, 0.10);
+  const m7  = monthsTo(GOAL, 0.07);
+
+  // Progress
+  document.getElementById("gp-bar").style.width = pct.toFixed(1)+"%";
+  document.getElementById("gp-pct").textContent = pct.toFixed(1)+"%";
+  document.getElementById("gp-cur").textContent = "฿"+fmt(Math.round(totalPort));
+
+  // Stats
+  document.getElementById("gp-stats").innerHTML = [
+    {l:"ยังขาดอีก",        v:"฿"+fmt(Math.round(GOAL-totalPort)), c:"#ff6b35"},
+    {l:"คิดเป็น % ของเป้า",v:(((GOAL-totalPort)/GOAL)*100).toFixed(1)+"%",  c:"#7b8fa1"},
+    {l:"ถึงเป้า (10%/ปี)", v:"~"+(Math.ceil(m10/12*10)/10)+" ปี",           c:"#00e5a0"},
+    {l:"ถึงเป้า (7%/ปี)",  v:"~"+(Math.ceil(m7/12*10)/10)+" ปี",            c:"#f5c518"},
+  ].map(c=>`<div class="sum-card"><div class="sum-label">${c.l}</div><div class="sum-val" style="color:${c.c}">${c.v}</div></div>`).join("");
+
+  // Chart
+  const labels = Array.from({length:MONTHS+1},(_,i)=>i%12===0?"ปี "+(i/12):"");
+  const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const gc = isDark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.07)";
+  const tc = isDark?"#7b8fa1":"#666";
+  const ctx = document.getElementById("gp-chart").getContext("2d");
+  new Chart(ctx, {
+    type:"line",
+    data:{
+      labels,
+      datasets:[
+        {label:"10%/ปี", data:p10, borderColor:"#00e5a0", borderWidth:2, pointRadius:0, tension:0.4, fill:false},
+        {label:"7%/ปี",  data:p7,  borderColor:"#f5c518", borderWidth:2, pointRadius:0, tension:0.4, fill:false},
+        {label:"เป้า 1M",data:Array(MONTHS+1).fill(GOAL), borderColor:"#ff4f4f", borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false},
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>"฿"+c.parsed.y.toLocaleString("th-TH")}}},
+      scales:{
+        x:{grid:{color:gc}, ticks:{color:tc, font:{size:10}, maxRotation:0}},
+        y:{grid:{color:gc}, ticks:{color:tc, font:{size:10}, callback:v=>v>=1000000?(v/1000000).toFixed(1)+"M":(v/1000).toFixed(0)+"k"}}
+      }
+    }
+  });
+
+  // Milestones
+  const MS = [
+    {label:"฿250,000 (25%)", target:250000},
+    {label:"฿500,000 (50%)", target:500000},
+    {label:"฿750,000 (75%)", target:750000},
+    {label:"฿1,000,000 (เป้า)", target:1000000},
+  ];
+  const now = new Date();
+  document.getElementById("gp-milestones").innerHTML = MS.map(m=>{
+    const done = totalPort >= m.target;
+    const mo = monthsTo(m.target, 0.10);
+    const d = new Date(now); d.setMonth(d.getMonth()+mo);
+    const yr = d.getFullYear()+543;
+    const mn = d.toLocaleString("th-TH",{month:"short"});
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bg3)">
+      <div style="width:28px;height:28px;border-radius:50%;background:${done?"#00e5a0":"#1a2535"};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:${done?"#070e1a":"#4a5e78"}">${done?"✓":"○"}</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:600">${m.label}</div><div style="font-size:11px;color:var(--muted)">${done?"สำเร็จแล้ว":"คาดถึง "+mn+" "+yr+" (10%/ปี)"}</div></div>
+      <div style="font-size:11px;font-family:'DM Mono',monospace;font-weight:700;color:${done?"#00e5a0":"#f5c518"}">${done?"✅":"~"+(Math.ceil(mo/12*10)/10)+" ปี"}</div>
+    </div>`;
+  }).join("");
+}
+</script>
+
 </body>
 </html>
