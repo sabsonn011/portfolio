@@ -392,46 +392,62 @@ function getAssets(){
 // ══ FETCH CSV ═════════════════════════════════════════════════════════════════
 function parseCSV(txt){
   const rows = txt.trim().split("\n").map(r=>r.split(",").map(c=>c.replace(/^"|"$/g,"").trim()));
-  
-  // Debug: log rows ให้เห็นใน console
   console.log("CSV rows:", rows.slice(0,15).map((r,i)=>i+": "+r.join(" | ")));
-  
-  // Scan ทุก row หา ticker โดยตรง — ไม่ขึ้นกับ fixed index
+ 
+  // ลบ $ ฿ , และช่องว่างออกก่อน parse
+  const toNum = s => parseFloat(String(s).replace(/[$฿,\s]/g,""));
+ 
+  // Scan หา Ticker ใน row แล้วเอาราคาจาก column ถัดไป
   const findPrice = (ticker) => {
     for(let i=0; i<rows.length; i++){
       const row = rows[i];
       for(let c=0; c<row.length; c++){
-        if(row[c] === ticker){
-          // หาตัวเลขใน row เดียวกัน
+        if(row[c].trim() === ticker){
+          // ลองทุก column ถัดจาก ticker
           for(let k=c+1; k<row.length; k++){
-            const v = parseFloat(row[k]);
-            if(!isNaN(v) && v > 0) return v;
+            const v = toNum(row[k]);
+            if(!isNaN(v) && v > 1) return v; // ราคาหุ้น US > $1 เสมอ
           }
         }
       }
     }
     return 0;
   };
-  
-  // หาด้วย Ticker name
+ 
+  // หาราคา NAV กองทุน (ค่าเล็กกว่า มักอยู่หลัง ticker)
+  const findNAV = (ticker) => {
+    for(let i=0; i<rows.length; i++){
+      const row = rows[i];
+      // ค้นหา ticker ที่ขึ้นต้นด้วย (เพราะอาจมีชื่อเต็ม)
+      for(let c=0; c<row.length; c++){
+        if(row[c].includes(ticker)){
+          for(let k=c+1; k<row.length; k++){
+            const v = toNum(row[k]);
+            if(!isNaN(v) && v > 0.1) return v;
+          }
+        }
+      }
+    }
+    return 0;
+  };
+ 
   const lly  = findPrice("LLY");
   const msft = findPrice("MSFT");
   const qqqm = findPrice("QQQM");
   const nvda = findPrice("NVDA");
-  const kkp  = findPrice("KKP US500-UH-E");
-  const scb  = findPrice("SCBS&P500A");
-  
-  // ถ้าหาไม่เจอ ลอง fallback ด้วย row index แบบเดิม
-  const p=(ri,ci=2)=>{ const v=parseFloat(rows[ri]?.[ci]); return isNaN(v)?0:v; };
-  
-  if(lly  > 0) P.LLY  = lly;  else if(p(5))  P.LLY  = p(5);
-  if(msft > 0) P.MSFT = msft; else if(p(6))  P.MSFT = p(6);
-  if(qqqm > 0) P.QQQM = qqqm; else if(p(7))  P.QQQM = p(7);
-  if(nvda > 0) P.NVDA = nvda; else if(p(8))  P.NVDA = p(8);
-  if(kkp  > 0) P.KKP  = kkp;  else if(p(12)) P.KKP  = p(12);
-  if(scb  > 0) P.SCB  = scb;  else if(p(13)) P.SCB  = p(13);
-  
-  console.log("Parsed prices:", P);
+  const kkp  = findNAV("KKP US500");
+  const scb  = findNAV("SCBS");
+ 
+  console.log("Raw parsed:", {lly, msft, qqqm, nvda, kkp, scb});
+ 
+  if(lly  > 1)   P.LLY  = lly;
+  if(msft > 1)   P.MSFT = msft;
+  if(qqqm > 1)   P.QQQM = qqqm;
+  if(nvda > 1)   P.NVDA = nvda;
+  if(kkp  > 0.1) P.KKP  = kkp;
+  if(scb  > 0.1) P.SCB  = scb;
+ 
+  console.log("Final prices:", P);
 }
  
 async function doFetch(){
@@ -680,4 +696,3 @@ function initGoal(totalPort) {
  
 </body>
 </html>
- 
