@@ -113,14 +113,14 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 </style>
 </head>
 <body>
-
+ 
 <div class="loading-overlay" id="loading">
   <div class="spinner"></div>
   <div style="color:var(--muted);font-size:13px">กำลังโหลดราคาหุ้น...</div>
 </div>
-
+ 
 <div id="app" style="display:none">
-
+ 
 <div class="header">
   <div class="header-label">Boss Portfolio · Dime!</div>
   <div class="header-top">
@@ -138,7 +138,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
     <button class="refresh-btn" onclick="doFetch()">↻ รีเฟรช</button>
   </div>
 </div>
-
+ 
 <div class="tabs" id="tabs">
   <div class="tab active" data-tab="overview">📊 ภาพรวม</div>
   <div class="tab" data-tab="holdings">💼 พอร์ต</div>
@@ -147,7 +147,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
   <div class="tab" data-tab="goal">🏆 เป้าหมาย</div>
   <div class="tab" data-tab="strategy">🎯 กลยุทธ์</div>
 </div>
-
+ 
 <div class="content">
   <div class="section active" id="sec-overview">
     <div class="g3" id="sum-grid"></div>
@@ -179,11 +179,11 @@ body{padding-bottom:env(safe-area-inset-bottom)}
       </div>
     </div>
   </div>
-
+ 
   <div class="section" id="sec-holdings">
     <div class="card" id="holdings-list"></div>
   </div>
-
+ 
   <div class="section" id="sec-rebalance">
     <div class="sum-box">
       <div style="font-weight:600;font-size:13px;margin-bottom:12px">💰 สรุปการปรับพอร์ต</div>
@@ -194,7 +194,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
     <div class="card card-pad" id="reb-sell-wrap" style="display:none"><div class="card-title" style="color:var(--yellow)">⚠️ เกินเป้า</div><div id="reb-sell-list"></div></div>
     <div class="card card-pad"><div class="card-title" style="color:var(--muted)">✅ ใกล้เป้าแล้ว</div><div id="reb-ok-list"></div></div>
   </div>
-
+ 
   <div class="section" id="sec-history">
     <div class="card card-pad" style="margin-bottom:12px">
       <div style="font-weight:600;font-size:13px;margin-bottom:12px">💰 Realized P&L — ปิดสถานะแล้ว</div>
@@ -220,8 +220,8 @@ body{padding-bottom:env(safe-area-inset-bottom)}
     </div>
     <div class="card" id="tx-list"></div>
   </div>
-
-
+ 
+ 
   <div class="section" id="sec-goal">
     <!-- HERO -->
     <div style="background:linear-gradient(135deg,#0a2018 0%,#0d1829 100%);border:1px solid #00e5a040;border-radius:20px;padding:22px 16px;margin-bottom:12px;text-align:center">
@@ -242,10 +242,10 @@ body{padding-bottom:env(safe-area-inset-bottom)}
         </div>
       </div>
     </div>
-
+ 
     <!-- STATS -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px" id="gp-stats"></div>
-
+ 
     <!-- PROJECTION CHART -->
     <div class="card card-pad" style="margin-bottom:12px">
       <div class="card-title">📈 Projection — เส้นทางสู่ 1 ล้าน</div>
@@ -256,13 +256,13 @@ body{padding-bottom:env(safe-area-inset-bottom)}
         <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:3px;background:var(--red);border-radius:99px"></div><span style="font-size:11px;color:var(--muted)">เป้า ฿1M</span></div>
       </div>
     </div>
-
+ 
     <!-- MILESTONES -->
     <div class="card card-pad" style="margin-bottom:12px">
       <div class="card-title">🏁 Milestones</div>
       <div id="gp-milestones"></div>
     </div>
-
+ 
     <!-- TIPS -->
     <div class="card card-pad">
       <div class="card-title">💡 Tips — ถึงเป้าเร็วขึ้น</div>
@@ -282,7 +282,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
       </div>
     </div>
   </div>
-
+ 
   <div class="section" id="sec-strategy">
     <div class="card card-pad" style="margin-bottom:12px">
       <div class="card-title">🎯 จุดเข้าซื้อ</div>
@@ -319,7 +319,7 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 </div>
 <div class="bottom-safe"></div>
 </div>
-
+ 
 <script>
 // ══ CONFIG ════════════════════════════════════════════════════════════════════
 const SHEETS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4mGkAxTM__JUoQHUstULI-fdo7yTO-PJlg-uzLQs4cGVerezZVizXKcd9dYL8JgFja2elaC00snGk/pub?gid=114958669&single=true&output=csv";
@@ -332,11 +332,11 @@ const KKP_U = 2430.8228, SCB_U = 146.3886;
 // ต้นทุน
 // ต้นทุน THB = ราคาเฉลี่ย(USD) x หุ้น x 32.24
 const COST_THB = { CASH:CASH_THB, SP500:34999.99, LLY:9912.51, MSFT:6943.53, QQQM:5003.33, NVDA:3014.76 };
-
+ 
 // ราคา fallback
 // ราคาหุ้น USD (fallback = ราคาล่าสุดที่รู้)
 let P = { LLY:883.96, MSFT:424.62, QQQM:273.38, NVDA:208.27, KKP:12.3588, SCB:36.3367 };
-
+ 
 const TARGETS = [
   {key:"SP500",label:"S&P 500",pct:55,color:"#00e5a0",sub:"KKP+SCBAM"},
   {key:"MSFT", label:"MSFT",   pct:10,color:"#00bfff",sub:"Microsoft"},
@@ -345,7 +345,7 @@ const TARGETS = [
   {key:"NVDA", label:"NVDA",  pct:10,color:"#ff6b35",sub:"NVIDIA"},
   {key:"CASH", label:"Cash",  pct:3, color:"#4a5e78",sub:"เงินสำรอง"},
 ];
-
+ 
 const TRANSACTIONS = [
   {date:"25 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"999.80 ฿",cancel:true},
   {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"2,999.80 ฿",price:"890.85",units:"0.1035"},
@@ -367,16 +367,16 @@ const TRANSACTIONS = [
   {date:"26 มี.ค. 69",type:"ซื้อ",sym:"SCBS&P500A",cat:"กองทุนรวม",display:"2,500 ฿",price:"33.3712",units:"74.91"},
   {date:"5 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"19,300 ฿",price:"48.25",units:"400"},
 ];
-
+ 
 const cpallCost=22125+18500+19300, cpallRev=18000+18000+22875;
 const cpallPnL=cpallRev-cpallCost, cpallPct=cpallPnL/cpallCost*100;
 const cpallU=1300, cpallAvgB=cpallCost/cpallU, cpallAvgS=cpallRev/cpallU;
-
+ 
 const fmt  = (n,d=0)=>Number(n).toLocaleString("th-TH",{maximumFractionDigits:d});
 const fmtE = (n,d=2)=>Number(n).toLocaleString("en",{maximumFractionDigits:d});
 const sign = n=>n>=0?"▲ +":"▼ ";
 const clr  = n=>n>=0?"#00e5a0":"#ff4f4f";
-
+ 
 // ══ ASSETS calc ═══════════════════════════════════════════════════════════════
 function getAssets(){
   return {
@@ -388,21 +388,52 @@ function getAssets(){
     NVDA:  P.NVDA*SH.NVDA*USD_THB,
   };
 }
-
+ 
 // ══ FETCH CSV ═════════════════════════════════════════════════════════════════
 function parseCSV(txt){
-  const rows = txt.trim().split("\n").map(r=>r.split(",").map(c=>c.replace(/^"|"$/g,"")));
-  // Sheet layout (0-indexed): row5=LLY,6=MSFT,7=QQQM,8=NVDA | col2=price
-  //                            row12=KKP,13=SCBAM             | col2=NAV
+  const rows = txt.trim().split("\n").map(r=>r.split(",").map(c=>c.replace(/^"|"$/g,"").trim()));
+  
+  // Debug: log rows ให้เห็นใน console
+  console.log("CSV rows:", rows.slice(0,15).map((r,i)=>i+": "+r.join(" | ")));
+  
+  // Scan ทุก row หา ticker โดยตรง — ไม่ขึ้นกับ fixed index
+  const findPrice = (ticker) => {
+    for(let i=0; i<rows.length; i++){
+      const row = rows[i];
+      for(let c=0; c<row.length; c++){
+        if(row[c] === ticker){
+          // หาตัวเลขใน row เดียวกัน
+          for(let k=c+1; k<row.length; k++){
+            const v = parseFloat(row[k]);
+            if(!isNaN(v) && v > 0) return v;
+          }
+        }
+      }
+    }
+    return 0;
+  };
+  
+  // หาด้วย Ticker name
+  const lly  = findPrice("LLY");
+  const msft = findPrice("MSFT");
+  const qqqm = findPrice("QQQM");
+  const nvda = findPrice("NVDA");
+  const kkp  = findPrice("KKP US500-UH-E");
+  const scb  = findPrice("SCBS&P500A");
+  
+  // ถ้าหาไม่เจอ ลอง fallback ด้วย row index แบบเดิม
   const p=(ri,ci=2)=>{ const v=parseFloat(rows[ri]?.[ci]); return isNaN(v)?0:v; };
-  if(p(5))  P.LLY  = p(5);
-  if(p(6))  P.MSFT = p(6);
-  if(p(7))  P.QQQM = p(7);
-  if(p(8))  P.NVDA = p(8);
-  if(p(12)) P.KKP  = p(12);
-  if(p(13)) P.SCB  = p(13);
+  
+  if(lly  > 0) P.LLY  = lly;  else if(p(5))  P.LLY  = p(5);
+  if(msft > 0) P.MSFT = msft; else if(p(6))  P.MSFT = p(6);
+  if(qqqm > 0) P.QQQM = qqqm; else if(p(7))  P.QQQM = p(7);
+  if(nvda > 0) P.NVDA = nvda; else if(p(8))  P.NVDA = p(8);
+  if(kkp  > 0) P.KKP  = kkp;  else if(p(12)) P.KKP  = p(12);
+  if(scb  > 0) P.SCB  = scb;  else if(p(13)) P.SCB  = p(13);
+  
+  console.log("Parsed prices:", P);
 }
-
+ 
 async function doFetch(){
   const badge = document.getElementById("live-badge");
   badge.textContent="⟳ กำลังโหลด..."; badge.style.color="#f5c518";
@@ -418,20 +449,20 @@ async function doFetch(){
   }
   renderAll();
 }
-
+ 
 // ══ RENDER ════════════════════════════════════════════════════════════════════
 function renderAll(){
   const A = getAssets();
   const TOT = Object.values(A).reduce((s,v)=>s+v,0);
   const PNL = TOT - TOTAL_COST;
   const PCT = PNL/TOTAL_COST*100;
-
+ 
   // Header
   document.getElementById("h-total").textContent = "฿"+fmt(TOT);
   document.getElementById("h-sub").textContent = "มูลค่ารวม · ทุน ฿"+fmt(TOTAL_COST)+" · 1 USD = "+USD_THB;
   const pe=document.getElementById("h-pnl"); pe.textContent=sign(PNL)+"฿"+fmt(Math.abs(PNL)); pe.style.color=clr(PNL);
   const pc=document.getElementById("h-pct"); pc.textContent=(PCT>=0?"+":"")+PCT.toFixed(2)+"% จากทุน"; pc.style.color=clr(PNL)+"99";
-
+ 
   // Summary 3 cards
   const usVal = A.MSFT+A.LLY+A.QQQM+A.NVDA;
   document.getElementById("sum-grid").innerHTML=[
@@ -439,13 +470,13 @@ function renderAll(){
     {l:"กองทุน S&P500", v:"฿"+fmt(A.SP500),  c:"#00bfff", sub:((A.SP500/TOT)*100).toFixed(1)+"% ของพอร์ต"},
     {l:"หุ้น US (USD)",  v:"$"+fmtE(usVal/USD_THB), c:"#a78bfa", sub:((usVal/TOT)*100).toFixed(1)+"% ของพอร์ต"},
   ].map(c=>`<div class="sum-card"><div class="sum-label">${c.l}</div><div class="sum-val" style="color:${c.c}">${c.v}</div><div class="sum-sub">${c.sub}</div></div>`).join("");
-
+ 
   // Rebalance calc
   const RB = TARGETS.map(t=>{
     const cur=A[t.key]||0, tgt=t.pct/100*TOT;
     return {...t,cur,tgt,diff:tgt-cur,curPct:cur/TOT*100,dPct:t.pct-cur/TOT*100};
   });
-
+ 
   // Donut
   const svg=document.getElementById("donut"); svg.innerHTML="";
   let cum=0; const r=50,cx=60,cy=60, rad=a=>(a-90)*Math.PI/180;
@@ -465,7 +496,7 @@ function renderAll(){
     svg.appendChild(el);
   });
   document.getElementById("alloc-legend").innerHTML=RB.map(r=>`<div class="legend-row"><div class="legend-top"><span style="color:#c0cfe0">${r.label}</span><span style="font-family:'DM Mono',monospace;color:${r.color}">${r.curPct.toFixed(1)}% <span style="color:#4a5e78">/ ${r.pct}%</span></span></div><div class="legend-bar"><div class="legend-fill" style="width:${Math.min(r.cur/Math.max(r.tgt,r.cur)*100,100)}%;background:${r.color}"></div><div class="legend-mark" style="left:${Math.min(r.tgt/Math.max(r.tgt,r.cur)*100,100)}%"></div></div></div>`).join("");
-
+ 
   // Holdings
   const HOLD=[
     {sym:"CASH",      name:"เงินสด · 3 บัญชี", layer:"—",   val:A.CASH,  cost:COST_THB.CASH, det:null},
@@ -482,7 +513,7 @@ function renderAll(){
     const det=h.det?`<div class="holding-detail" id="hd${i}"><div class="d2">${Object.entries(h.det).map(([k,v])=>`<div class="detail-item"><div class="detail-label">${k}</div><div class="detail-val">${v}</div></div>`).join("")}</div></div>`:"";
     return `<div class="holding"><div class="holding-main" onclick="toggleH(${i})"><div class="holding-left"><div style="display:flex;align-items:center"><span class="holding-sym">${h.sym}</span>${h.layer!=="—"?`<span class="pill" style="background:${lc}18;border:1px solid ${lc}44;color:${lc}">${h.layer}</span>`:""}</div><div class="holding-name">${h.name}</div></div><div class="holding-right"><div class="holding-val">฿${fmt(h.val)}</div><div class="holding-pnl" style="color:${clr(pnl)}">${sign(pnl)}฿${fmt(Math.abs(pnl))} (${pp>=0?"+":""}${pp.toFixed(2)}%)</div></div></div>${det}</div>`;
   }).join("");
-
+ 
   // Rebalance
   const BUY=RB.filter(r=>r.diff>100).sort((a,b)=>b.diff-a.diff);
   const SELL=RB.filter(r=>r.diff<-100);
@@ -501,9 +532,9 @@ function renderAll(){
   document.getElementById("reb-ok-list").innerHTML=OK.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:10px;padding:10px 13px;margin-bottom:7px"><div><span style="font-family:'DM Mono',monospace;font-weight:700;color:${r.color}">${r.label}</span><span style="color:var(--dim);font-size:11px;margin-left:8px">${r.curPct.toFixed(1)}% / เป้า ${r.pct}%</span></div><span class="pill" style="background:#7b8fa118;border:1px solid #7b8fa144;color:#7b8fa1">✓ OK</span></div>`).join("");
   initGoal(TOT);
 }
-
+ 
 function toggleH(i){const d=document.getElementById("hd"+i);if(d)d.classList.toggle("open");}
-
+ 
 // CPALL (static)
 const cpallPnL2=cpallRev-cpallCost, cpallPct2=cpallPnL2/cpallCost*100;
 const cpPnlEl=document.getElementById("cpall-pnl"); cpPnlEl.textContent=sign(cpallPnL2)+"฿"+fmt(Math.abs(cpallPnL2)); cpPnlEl.style.color=clr(cpallPnL2);
@@ -513,7 +544,7 @@ document.getElementById("cpall-stats").innerHTML=[
   {l:"หุ้น",v:fmt(cpallU)+" หุ้น",c:"#7b8fa1"},{l:"ราคาเฉลี่ยซื้อ",v:"฿"+cpallAvgB.toFixed(2),c:"#7b8fa1"},
   {l:"ราคาเฉลี่ยขาย",v:"฿"+cpallAvgS.toFixed(2),c:"#e8edf5"},{l:"กำไร/หุ้น",v:(cpallPnL2>=0?"+":"")+"฿"+(cpallPnL2/cpallU).toFixed(2),c:clr(cpallPnL2)},
 ].map(({l,v,c})=>`<div class="stat-item"><div class="stat-label">${l}</div><div class="stat-val" style="color:${c}">${v}</div></div>`).join("");
-
+ 
 // TX filter
 let txF="ทั้งหมด";
 function renderTx(){
@@ -531,7 +562,7 @@ document.getElementById("tx-filters").addEventListener("click",e=>{
   const f=e.target.dataset.f;if(!f)return;
   txF=f;document.querySelectorAll(".txf").forEach(b=>b.classList.toggle("active",b.dataset.f===f));renderTx();
 });
-
+ 
 // Entry zones
 document.getElementById("entry-list").innerHTML=[
   {sym:"NVDA",color:"#ff6b35",zones:[{l:"🔥 Breakout",p:"$212–214"},{l:"Buy Zone 1",p:"$198–200"},{l:"Buy Zone 2",p:"$185–190"}]},
@@ -540,7 +571,7 @@ document.getElementById("entry-list").innerHTML=[
   {sym:"MSFT",color:"#00bfff",zones:[{l:"Buy Zone 1",p:"$410–412"},{l:"Buy Zone 2",p:"$400–405"}]},
   {sym:"S&P500",color:"#00e5a0",zones:[{l:"✔️ ซื้อได้เลย",p:"DCA ทุกเดือน"}]},
 ].map((s,i,a)=>`<div class="entry-row" ${i===a.length-1?"style='border:none;margin:0;padding:0'":""}><div class="entry-sym" style="color:${s.color}">${s.sym}</div><div class="zones">${s.zones.map(z=>`<div class="zone" style="background:${s.color}12;border:1px solid ${s.color}40"><div class="zone-lbl">${z.l}</div><div class="zone-price" style="color:${s.color}">${z.p}</div></div>`).join("")}</div></div>`).join("");
-
+ 
 // Tabs
 document.getElementById("tabs").addEventListener("click",e=>{
   const t=e.target.dataset.tab;if(!t)return;
@@ -548,7 +579,7 @@ document.getElementById("tabs").addEventListener("click",e=>{
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.getElementById("sec-"+t).classList.add("active");
 });
-
+ 
 // ══ INIT ══════════════════════════════════════════════════════════════════════
 (async()=>{
   await doFetch();
@@ -556,17 +587,17 @@ document.getElementById("tabs").addEventListener("click",e=>{
   document.getElementById("app").style.display="block";
 })();
 </script>
-
+ 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
 let gpInited = false;
-
+ 
 function initGoal(totalPort) {
   if (gpInited) return;
   gpInited = true;
-
+ 
   const GOAL = 1000000, DCA_M = 15000;
-
+ 
   function project(rate, months) {
     const r = rate/12, pts = [totalPort];
     for (let m=1; m<=months; m++) pts.push(Math.round(pts[m-1]*(1+r)+DCA_M));
@@ -577,19 +608,19 @@ function initGoal(totalPort) {
     for (let m=1; m<=120; m++) { p = p*(1+r)+DCA_M; if(p>=target) return m; }
     return 120;
   }
-
+ 
   const MONTHS = 60;
   const p10 = project(0.10, MONTHS);
   const p7  = project(0.07, MONTHS);
   const pct = Math.min(totalPort/GOAL*100, 100);
   const m10 = monthsTo(GOAL, 0.10);
   const m7  = monthsTo(GOAL, 0.07);
-
+ 
   // Progress
   document.getElementById("gp-bar").style.width = pct.toFixed(1)+"%";
   document.getElementById("gp-pct").textContent = pct.toFixed(1)+"%";
   document.getElementById("gp-cur").textContent = "฿"+fmt(Math.round(totalPort));
-
+ 
   // Stats
   document.getElementById("gp-stats").innerHTML = [
     {l:"ยังขาดอีก",        v:"฿"+fmt(Math.round(GOAL-totalPort)), c:"#ff6b35"},
@@ -597,7 +628,7 @@ function initGoal(totalPort) {
     {l:"ถึงเป้า (10%/ปี)", v:"~"+(Math.ceil(m10/12*10)/10)+" ปี",           c:"#00e5a0"},
     {l:"ถึงเป้า (7%/ปี)",  v:"~"+(Math.ceil(m7/12*10)/10)+" ปี",            c:"#f5c518"},
   ].map(c=>`<div class="sum-card"><div class="sum-label">${c.l}</div><div class="sum-val" style="color:${c.c}">${c.v}</div></div>`).join("");
-
+ 
   // Chart
   const labels = Array.from({length:MONTHS+1},(_,i)=>i%12===0?"ปี "+(i/12):"");
   const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -623,7 +654,7 @@ function initGoal(totalPort) {
       }
     }
   });
-
+ 
   // Milestones
   const MS = [
     {label:"฿250,000 (25%)", target:250000},
@@ -646,6 +677,7 @@ function initGoal(totalPort) {
   }).join("");
 }
 </script>
-
+ 
 </body>
 </html>
+ 
