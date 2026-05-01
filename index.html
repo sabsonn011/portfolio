@@ -331,7 +331,7 @@ const SH = { LLY:0.3869247, MSFT:0.6680275, QQQM:0.5791213, NVDA:1.2213164 };
 const KKP_U = 4424.3955, SCB_U = 146.3886;
 // ต้นทุน
 // ต้นทุน THB = ราคาเฉลี่ย(USD) x หุ้น x 32.24
-const COST_THB = { CASH:CASH_THB, SP500:84999.99, LLY:11000.61, MSFT:8953.33, QQQM:5003.33, NVDA:7919.88 };
+const COST_THB = { CASH:CASH_THB, SP500:60000.09, LLY:11000.61, MSFT:8953.33, QQQM:5003.33, NVDA:7919.88 };
 
 // ราคา fallback
 // ราคาหุ้น USD (fallback = ราคาล่าสุดที่รู้)
@@ -347,30 +347,29 @@ const TARGETS = [
 ];
 
 const TRANSACTIONS = [
-  {date:"28 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"33.75 USD",price:"872.9780",units:"0.0386034"},
-  {date:"25 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"999.80 ฿",cancel:true},
-  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"2,999.80 ฿",price:"890.85",units:"0.1035"},
-  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"3,999.85 ฿",price:"874.99",units:"0.1407"},
-  {date:"24 เม.ย. 69",type:"ซื้อ",sym:"LLY",cat:"หุ้น US",display:"92.33 USD",price:"884.98",units:"0.1042"},
-  {date:"24 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"18,000 ฿",price:"45.00",units:"400"},
-  {date:"23 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"18,000 ฿",price:"45.00",units:"400"},
-  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"3,999.72 ฿",price:"415.996",units:"0.2957"},
-  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"2,999.78 ฿",price:"419.064",units:"0.2204"},
-  {date:"23 เม.ย. 69",type:"ซื้อ",sym:"QQQM",cat:"หุ้น US",display:"61.95 USD",price:"269.51",units:"0.2295"},
-  {date:"22 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"22,875 ฿",price:"45.75",units:"500"},
-  {date:"1 พ.ค. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"58.70 USD",price:"198.9980",units:"0.2949778"},
-  {date:"30 เม.ย. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"2,999.94 ฿",price:"198.9980",units:"0.4611101"},
-  {date:"30 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"61.48 USD",price:"403.9980",units:"0.1519314"},
-  {date:"29 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"25,000 ฿",price:"12.5403",units:"1,993.5727"},
-  {date:"22 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
-  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
-  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"93.66 USD",price:"200.998",units:"0.4652"},
-  {date:"21 เม.ย. 69",type:"ซื้อ",sym:"QQQM",cat:"หุ้น US",display:"2,999.95 ฿",price:"266.97",units:"0.3496"},
-  {date:"19 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"22,125 ฿",price:"44.25",units:"500"},
-  {date:"16 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"18,500 ฿",price:"46.25",units:"400"},
-  {date:"10 เม.ย. 69",type:"ซื้อ",sym:"SCBS&P500A",cat:"กองทุนรวม",display:"2,500 ฿",price:"34.9779",units:"71.47"},
-  {date:"26 มี.ค. 69",type:"ซื้อ",sym:"SCBS&P500A",cat:"กองทุนรวม",display:"2,500 ฿",price:"33.3712",units:"74.91"},
-  {date:"5 มี.ค. 69",type:"ซื้อ",sym:"CPALL",cat:"หุ้นไทย",display:"19,300 ฿",price:"48.25",units:"400"},
+  {date:"1 พ.ค. 69",  type:"ซื้อ", sym:"NVDA",        cat:"หุ้น US",    display:"58.70 USD",   price:"198.9980", units:"0.2949778"},
+  {date:"30 เม.ย. 69",type:"ซื้อ", sym:"NVDA",        cat:"หุ้น US",    display:"2,999.94 ฿",  price:"198.9980", units:"0.4611101"},
+  {date:"30 เม.ย. 69",type:"ซื้อ", sym:"MSFT",        cat:"หุ้น US",    display:"61.48 USD",   price:"403.9980", units:"0.1519314"},
+  {date:"29 เม.ย. 69",type:"ซื้อ", sym:"KKP US500",   cat:"กองทุนรวม",  display:"25,000 ฿",    price:"12.5403",  units:"1,993.5727"},
+  {date:"28 เม.ย. 69",type:"ซื้อ", sym:"LLY",         cat:"หุ้น US",    display:"33.75 USD",   price:"872.9780", units:"0.0386034"},
+  {date:"24 เม.ย. 69",type:"ซื้อ", sym:"LLY",         cat:"หุ้น US",    display:"3,999.85 ฿",  price:"874.9920", units:"0.1406870"},
+  {date:"24 เม.ย. 69",type:"ซื้อ", sym:"LLY",         cat:"หุ้น US",    display:"92.33 USD",   price:"884.9840", units:"0.1041600"},
+  {date:"24 เม.ย. 69",type:"ขาย",  sym:"CPALL",       cat:"หุ้นไทย",    display:"18,000 ฿",    price:"45.00",    units:"400"},
+  {date:"23 เม.ย. 69",type:"ขาย",  sym:"CPALL",       cat:"หุ้นไทย",    display:"18,000 ฿",    price:"45.00",    units:"400"},
+  {date:"23 เม.ย. 69",type:"ซื้อ", sym:"MSFT",        cat:"หุ้น US",    display:"3,999.72 ฿",  price:"415.9960", units:"0.2957239"},
+  {date:"23 เม.ย. 69",type:"ซื้อ", sym:"MSFT",        cat:"หุ้น US",    display:"2,999.78 ฿",  price:"419.0640", units:"0.2203720"},
+  {date:"23 เม.ย. 69",type:"ซื้อ", sym:"QQQM",        cat:"หุ้น US",    display:"61.95 USD",   price:"269.5060", units:"0.2294939"},
+  {date:"22 เม.ย. 69",type:"ขาย",  sym:"CPALL",       cat:"หุ้นไทย",    display:"22,875 ฿",    price:"45.75",    units:"500"},
+  {date:"22 เม.ย. 69",type:"ซื้อ", sym:"KKP US500",   cat:"กองทุนรวม",  display:"15,000 ฿",    price:"12.3415",  units:"1,215.4114"},
+  {date:"21 เม.ย. 69",type:"ซื้อ", sym:"NVDA",        cat:"หุ้น US",    display:"93.66 USD",   price:"200.9980", units:"0.4652285"},
+  {date:"21 เม.ย. 69",type:"ซื้อ", sym:"QQQM",        cat:"หุ้น US",    display:"2,999.95 ฿",  price:"266.9700", units:"0.3496272"},
+  {date:"21 เม.ย. 69",type:"ซื้อ", sym:"KKP US500",   cat:"กองทุนรวม",  display:"15,000 ฿",    price:"12.3415",  units:"1,215.4114"},
+  {date:"24 เม.ย. 69",type:"ซื้อ", sym:"LLY",         cat:"หุ้น US",    display:"2,999.80 ฿",  price:"890.8500", units:"0.1034742"},
+  {date:"10 เม.ย. 69",type:"ซื้อ", sym:"SCBS&P500A",  cat:"กองทุนรวม",  display:"2,500 ฿",     price:"34.9779",  units:"71.4737"},
+  {date:"26 มี.ค. 69",type:"ซื้อ", sym:"SCBS&P500A",  cat:"กองทุนรวม",  display:"2,500 ฿",     price:"33.3712",  units:"74.9149"},
+  {date:"19 มี.ค. 69",type:"ซื้อ", sym:"CPALL",       cat:"หุ้นไทย",    display:"22,125 ฿",    price:"44.25",    units:"500"},
+  {date:"16 มี.ค. 69",type:"ซื้อ", sym:"CPALL",       cat:"หุ้นไทย",    display:"18,500 ฿",    price:"46.25",    units:"400"},
+  {date:"5 มี.ค. 69", type:"ซื้อ", sym:"CPALL",       cat:"หุ้นไทย",    display:"19,300 ฿",    price:"48.25",    units:"400"},
 ];
 
 const cpallCost=22125+18500+19300, cpallRev=18000+18000+22875;
@@ -521,7 +520,7 @@ function renderAll(){
   // Holdings
   const HOLD=[
     {sym:"CASH",      name:"เงินสด · 3 บัญชี", layer:"—",   val:A.CASH,  cost:COST_THB.CASH, det:null},
-    {sym:"KKP US500", name:"S&P500 (KKP)",      layer:"ฐาน", val:P.KKP*KKP_U, cost:30000, det:{หน่วยคงเหลือ:fmtE(KKP_U,4),NAV_ปัจจุบัน:"฿"+P.KKP.toFixed(4),ต้นทุน_NAV:"฿18.0816",ต้นทุนรวม:"฿80,000"}},
+    {sym:"KKP US500", name:"S&P500 (KKP)",      layer:"ฐาน", val:P.KKP*KKP_U, cost:30000, det:{หน่วยคงเหลือ:fmtE(KKP_U,4),NAV_ปัจจุบัน:"฿"+P.KKP.toFixed(4),ต้นทุน_NAV:"฿12.4311",ต้นทุนรวม:"฿55,000"}},
     {sym:"SCBS&P500A",name:"S&P500 (SCBAM)",    layer:"ฐาน", val:P.SCB*SCB_U,  cost:4999.99, det:{หน่วยคงเหลือ:fmtE(SCB_U,4),NAV_ปัจจุบัน:"฿"+P.SCB.toFixed(4),ต้นทุน_NAV:"฿34.1556",ต้นทุนรวม:"฿4,999.99"}},
     {sym:"MSFT",      name:"Microsoft",          layer:"ฐาน", val:A.MSFT, cost:COST_THB.MSFT, det:{หุ้นคงเหลือ:fmtE(SH.MSFT,7),ราคาปัจจุบัน:"$"+fmtE(P.MSFT,2),ต้นทุน_หุ้น:"$414.4290",ต้นทุนรวม:"$276.85"}},
     {sym:"LLY",       name:"Eli Lilly",          layer:"ฐาน", val:A.LLY,  cost:COST_THB.LLY,  det:{หุ้นคงเหลือ:fmtE(SH.LLY,7),ราคาปัจจุบัน:"$"+fmtE(P.LLY,2),ต้นทุน_หุ้น:"$881.7218",ต้นทุนรวม:"$341.21"}},
