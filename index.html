@@ -324,14 +324,14 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 // ══ CONFIG ════════════════════════════════════════════════════════════════════
 const SHEETS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4mGkAxTM__JUoQHUstULI-fdo7yTO-PJlg-uzLQs4cGVerezZVizXKcd9dYL8JgFja2elaC00snGk/pub?gid=114958669&single=true&output=csv";
 const TOTAL_COST = 110000;
-const CASH_THB   = 47685.35;
-const USD_THB    = 32.47;
+const CASH_THB   = 17681.53;
+const USD_THB    = 32.34;
 // จำนวนหน่วย/หุ้น — อัปเดตตอน DCA
-const SH = { LLY:0.3869247, MSFT:0.5160961, QQQM:0.5791213, NVDA:0.4652285 };
-const KKP_U = 2430.8228, SCB_U = 146.3886;
+const SH = { LLY:0.3869247, MSFT:0.6680275, QQQM:0.5791213, NVDA:0.9263386 };
+const KKP_U = 4424.3955, SCB_U = 146.3886;
 // ต้นทุน
 // ต้นทุน THB = ราคาเฉลี่ย(USD) x หุ้น x 32.24
-const COST_THB = { CASH:CASH_THB, SP500:34999.99, LLY:11000.61, MSFT:6943.53, QQQM:5003.33, NVDA:3014.76 };
+const COST_THB = { CASH:CASH_THB, SP500:84999.99, LLY:11000.61, MSFT:8953.33, QQQM:5003.33, NVDA:6024.05 };
 
 // ราคา fallback
 // ราคาหุ้น USD (fallback = ราคาล่าสุดที่รู้)
@@ -358,6 +358,9 @@ const TRANSACTIONS = [
   {date:"23 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"2,999.78 ฿",price:"419.064",units:"0.2204"},
   {date:"23 เม.ย. 69",type:"ซื้อ",sym:"QQQM",cat:"หุ้น US",display:"61.95 USD",price:"269.51",units:"0.2295"},
   {date:"22 เม.ย. 69",type:"ขาย",sym:"CPALL",cat:"หุ้นไทย",display:"22,875 ฿",price:"45.75",units:"500"},
+  {date:"30 เม.ย. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"2,999.94 ฿",price:"198.9980",units:"0.4611101"},
+  {date:"30 เม.ย. 69",type:"ซื้อ",sym:"MSFT",cat:"หุ้น US",display:"61.48 USD",price:"403.9980",units:"0.1519314"},
+  {date:"29 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"25,000 ฿",price:"12.5403",units:"1,993.5727"},
   {date:"22 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
   {date:"21 เม.ย. 69",type:"ซื้อ",sym:"KKP US500",cat:"กองทุนรวม",display:"15,000 ฿",price:"12.3415",units:"1,215.41"},
   {date:"21 เม.ย. 69",type:"ซื้อ",sym:"NVDA",cat:"หุ้น US",display:"93.66 USD",price:"200.998",units:"0.4652"},
@@ -517,12 +520,12 @@ function renderAll(){
   // Holdings
   const HOLD=[
     {sym:"CASH",      name:"เงินสด · 3 บัญชี", layer:"—",   val:A.CASH,  cost:COST_THB.CASH, det:null},
-    {sym:"KKP US500", name:"S&P500 (KKP)",      layer:"ฐาน", val:P.KKP*KKP_U, cost:30000, det:{หน่วยคงเหลือ:fmtE(KKP_U,4),NAV_ปัจจุบัน:"฿"+P.KKP.toFixed(4),ต้นทุน_NAV:"฿12.3415",ต้นทุนรวม:"฿30,000"}},
+    {sym:"KKP US500", name:"S&P500 (KKP)",      layer:"ฐาน", val:P.KKP*KKP_U, cost:30000, det:{หน่วยคงเหลือ:fmtE(KKP_U,4),NAV_ปัจจุบัน:"฿"+P.KKP.toFixed(4),ต้นทุน_NAV:"฿18.0816",ต้นทุนรวม:"฿80,000"}},
     {sym:"SCBS&P500A",name:"S&P500 (SCBAM)",    layer:"ฐาน", val:P.SCB*SCB_U,  cost:4999.99, det:{หน่วยคงเหลือ:fmtE(SCB_U,4),NAV_ปัจจุบัน:"฿"+P.SCB.toFixed(4),ต้นทุน_NAV:"฿34.1556",ต้นทุนรวม:"฿4,999.99"}},
-    {sym:"MSFT",      name:"Microsoft",          layer:"ฐาน", val:A.MSFT, cost:COST_THB.MSFT, det:{หุ้นคงเหลือ:fmtE(SH.MSFT,7),ราคาปัจจุบัน:"$"+fmtE(P.MSFT,2),ต้นทุน_หุ้น:"$417.3060",ต้นทุนรวม:"$215.37"}},
+    {sym:"MSFT",      name:"Microsoft",          layer:"ฐาน", val:A.MSFT, cost:COST_THB.MSFT, det:{หุ้นคงเหลือ:fmtE(SH.MSFT,7),ราคาปัจจุบัน:"$"+fmtE(P.MSFT,2),ต้นทุน_หุ้น:"$414.4290",ต้นทุนรวม:"$276.85"}},
     {sym:"LLY",       name:"Eli Lilly",          layer:"ฐาน", val:A.LLY,  cost:COST_THB.LLY,  det:{หุ้นคงเหลือ:fmtE(SH.LLY,7),ราคาปัจจุบัน:"$"+fmtE(P.LLY,2),ต้นทุน_หุ้น:"$881.7218",ต้นทุนรวม:"$341.21"}},
     {sym:"QQQM",      name:"Invesco NASDAQ 100", layer:"เร่ง",val:A.QQQM, cost:COST_THB.QQQM, det:{หุ้นคงเหลือ:fmtE(SH.QQQM,7),ราคาปัจจุบัน:"$"+fmtE(P.QQQM,2),ต้นทุน_หุ้น:"$267.9750",ต้นทุนรวม:"$155.19"}},
-    {sym:"NVDA",      name:"NVIDIA",             layer:"เร่ง",val:A.NVDA, cost:COST_THB.NVDA, det:{หุ้นคงเหลือ:fmtE(SH.NVDA,7),ราคาปัจจุบัน:"$"+fmtE(P.NVDA,2),ต้นทุน_หุ้น:"$200.9980",ต้นทุนรวม:"$93.51"}},
+    {sym:"NVDA",      name:"NVIDIA",             layer:"เร่ง",val:A.NVDA, cost:COST_THB.NVDA, det:{หุ้นคงเหลือ:fmtE(SH.NVDA,7),ราคาปัจจุบัน:"$"+fmtE(P.NVDA,2),ต้นทุน_หุ้น:"$201.0847",ต้นทุนรวม:"$186.27"}},
   ];
   document.getElementById("holdings-list").innerHTML=HOLD.map((h,i)=>{
     const pnl=h.val-h.cost, pp=pnl/h.cost*100;
