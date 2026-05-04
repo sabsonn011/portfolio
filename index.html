@@ -444,15 +444,17 @@ function parseCSV(txt){
   const msft = findPrice("MSFT");
   const qqqm = findPrice("QQQM");
   const nvda = findPrice("NVDA");
+  const tmdx = findPrice("TMDX");
   const kkp  = findNAV("KKP US500");
   const scb  = findNAV("SCBS");
 
-  console.log("Raw parsed:", {lly, msft, qqqm, nvda, kkp, scb});
+  console.log("Raw parsed:", {lly, msft, qqqm, nvda, tmdx, kkp, scb});
 
   if(lly  > 1)   P.LLY  = lly;
   if(msft > 1)   P.MSFT = msft;
   if(qqqm > 1)   P.QQQM = qqqm;
   if(nvda > 1)   P.NVDA = nvda;
+  if(tmdx > 1)   P.TMDX = tmdx;
   if(kkp  > 0.1) P.KKP  = kkp;
   if(scb  > 0.1) P.SCB  = scb;
 
