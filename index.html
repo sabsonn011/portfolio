@@ -324,18 +324,18 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 // ══ CONFIG ════════════════════════════════════════════════════════════════════
 const SHEETS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4mGkAxTM__JUoQHUstULI-fdo7yTO-PJlg-uzLQs4cGVerezZVizXKcd9dYL8JgFja2elaC00snGk/pub?gid=114958669&single=true&output=csv";
 const TOTAL_COST = 110000;
-const CASH_THB   = 6783.46;
+const CASH_THB   = 5224.06;
 const USD_THB    = 32.70;
 // จำนวนหน่วย/หุ้น — อัปเดตตอน DCA
-const SH = { TMDX:0.6170770, LLY:0.3869247, MSFT:0.6680275, QQQM:1.0192161, NVDA:1.6910088 };
+const SH = { ARM:0.2848834, NVTS:2.0263089, LLY:0.3869247, MSFT:0.6680275, QQQM:1.0192161, NVDA:1.6910088 };
 const KKP_U = 4424.3955, SCB_U = 146.3886;
 // ต้นทุน
 // ต้นทุน THB = ราคาเฉลี่ย(USD) x หุ้น x 32.24
-const COST_THB = { CASH:CASH_THB, TMDX:1996.66, SP500:60000.09, LLY:11000.61, MSFT:8953.33, QQQM:9054.63, NVDA:10972.81 };
+const COST_THB = { CASH:CASH_THB, ARM:2031.98, NVTS:1019.26, SP500:60000.09, LLY:11000.61, MSFT:8953.33, QQQM:9054.63, NVDA:10972.81 };
 
 // ราคา fallback
 // ราคาหุ้น USD (fallback = ราคาล่าสุดที่รู้)
-let P = { TMDX:96.91, LLY:883.96, MSFT:424.62, QQQM:273.38, NVDA:208.27, KKP:12.3588, SCB:36.3367 };
+let P = { ARM:224.99, NVTS:15.36, LLY:883.96, MSFT:424.62, QQQM:273.38, NVDA:208.27, KKP:12.3588, SCB:36.3367 };
 
 const TARGETS = [
   {key:"SP500",label:"S&P 500",pct:55,color:"#00e5a0",sub:"KKP+SCBAM"},
@@ -347,9 +347,29 @@ const TARGETS = [
 ];
 
 const TRANSACTIONS = [
+  {date:"13 พ.ค. 69",type:"ซื้อ", sym:"MSFT", cat:"หุ้น US",  display:"2,499.78 ฿",  price:"—",        units:"—",        cancel:true},
+  {date:"8 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.05 USD",   price:"210.9940", units:"0.1469236"},
+  {date:"7 พ.ค. 69", type:"ซื้อ", sym:"NVTS", cat:"หุ้น US",  display:"31.17 USD",   price:"15.3560",  units:"2.0263089"},
+  {date:"6 พ.ค. 69", type:"ขาย",  sym:"TMDX", cat:"หุ้น US",  display:"0.6170769 หุ้น",price:"74.8640", units:"0.6170769"},
+  {date:"6 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.09 USD",   price:"224.9930", units:"0.1379598"},
   {date:"4 พ.ค. 69", type:"ซื้อ", sym:"QQQM", cat:"หุ้น US",  display:"3,999.87 ฿", price:"276.5540", units:"0.4400948"},
+  {date:"13 พ.ค. 69",type:"ซื้อ", sym:"MSFT", cat:"หุ้น US",  display:"2,499.78 ฿",  price:"—",        units:"—",        cancel:true},
+  {date:"8 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.05 USD",   price:"210.9940", units:"0.1469236"},
+  {date:"7 พ.ค. 69", type:"ซื้อ", sym:"NVTS", cat:"หุ้น US",  display:"31.17 USD",   price:"15.3560",  units:"2.0263089"},
+  {date:"6 พ.ค. 69", type:"ขาย",  sym:"TMDX", cat:"หุ้น US",  display:"0.6170769 หุ้น",price:"74.8640", units:"0.6170769"},
+  {date:"6 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.09 USD",   price:"224.9930", units:"0.1379598"},
   {date:"4 พ.ค. 69", type:"ซื้อ", sym:"NVDA", cat:"หุ้น US",  display:"2,999.90 ฿", price:"195.0000", units:"0.4696923"},
+  {date:"13 พ.ค. 69",type:"ซื้อ", sym:"MSFT", cat:"หุ้น US",  display:"2,499.78 ฿",  price:"—",        units:"—",        cancel:true},
+  {date:"8 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.05 USD",   price:"210.9940", units:"0.1469236"},
+  {date:"7 พ.ค. 69", type:"ซื้อ", sym:"NVTS", cat:"หุ้น US",  display:"31.17 USD",   price:"15.3560",  units:"2.0263089"},
+  {date:"6 พ.ค. 69", type:"ขาย",  sym:"TMDX", cat:"หุ้น US",  display:"0.6170769 หุ้น",price:"74.8640", units:"0.6170769"},
+  {date:"6 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.09 USD",   price:"224.9930", units:"0.1379598"},
   {date:"4 พ.ค. 69", type:"ซื้อ", sym:"TMDX", cat:"หุ้น US",  display:"999.97 ฿",   price:"97.9840",  units:"0.3115814"},
+  {date:"13 พ.ค. 69",type:"ซื้อ", sym:"MSFT", cat:"หุ้น US",  display:"2,499.78 ฿",  price:"—",        units:"—",        cancel:true},
+  {date:"8 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.05 USD",   price:"210.9940", units:"0.1469236"},
+  {date:"7 พ.ค. 69", type:"ซื้อ", sym:"NVTS", cat:"หุ้น US",  display:"31.17 USD",   price:"15.3560",  units:"2.0263089"},
+  {date:"6 พ.ค. 69", type:"ขาย",  sym:"TMDX", cat:"หุ้น US",  display:"0.6170769 หุ้น",price:"74.8640", units:"0.6170769"},
+  {date:"6 พ.ค. 69", type:"ซื้อ", sym:"ARM",  cat:"หุ้น US",  display:"31.09 USD",   price:"224.9930", units:"0.1379598"},
   {date:"4 พ.ค. 69", type:"ซื้อ", sym:"TMDX", cat:"หุ้น US",  display:"999.97 ฿",   price:"99.9360",  units:"0.3054955"},
   {date:"1 พ.ค. 69",  type:"ซื้อ", sym:"NVDA",        cat:"หุ้น US",    display:"58.70 USD",   price:"198.9980", units:"0.2949778"},
   {date:"30 เม.ย. 69",type:"ซื้อ", sym:"NVDA",        cat:"หุ้น US",    display:"2,999.94 ฿",  price:"198.9980", units:"0.4611101"},
@@ -393,8 +413,9 @@ function getAssets(){
     MSFT:  P.MSFT*SH.MSFT*USD_THB,
     LLY:   P.LLY *SH.LLY *USD_THB,
     QQQM:  P.QQQM*SH.QQQM*USD_THB,
+    ARM:   P.ARM*SH.ARM*USD_THB,
+    NVTS:  P.NVTS*SH.NVTS*USD_THB,
     NVDA:  P.NVDA*SH.NVDA*USD_THB,
-    TMDX:  P.TMDX*SH.TMDX*USD_THB,
   };
 }
 
@@ -415,7 +436,7 @@ function parseCSV(txt){
           // ลองทุก column ถัดจาก ticker
           for(let k=c+1; k<row.length; k++){
             const v = toNum(row[k]);
-            if(!isNaN(v) && v > 1) return v; // ราคาหุ้น US > $1 เสมอ
+            if(!isNaN(v) && v >= 50) return v; // ราคาหุ้น US > $50 (กรอง %change ออก)
           }
         }
       }
@@ -454,6 +475,10 @@ function parseCSV(txt){
   if(msft > 1)   P.MSFT = msft;
   if(qqqm > 1)   P.QQQM = qqqm;
   if(nvda > 1)   P.NVDA = nvda;
+  const arm = findPrice("ARM");
+  if(arm >= 50)  P.ARM  = arm;
+  const nvts = findPrice("NVTS");
+  if(nvts >= 5)  P.NVTS = nvts;
   if(tmdx > 1)   P.TMDX = tmdx;
   if(kkp  > 0.1) P.KKP  = kkp;
   if(scb  > 0.1) P.SCB  = scb;
@@ -533,6 +558,8 @@ function renderAll(){
     {sym:"LLY",       name:"Eli Lilly",          layer:"ฐาน", val:A.LLY,  cost:COST_THB.LLY,  det:{หุ้นคงเหลือ:fmtE(SH.LLY,7),ราคาปัจจุบัน:"$"+fmtE(P.LLY,2),ต้นทุน_หุ้น:"$881.7218",ต้นทุนรวม:"$341.21"}},
     {sym:"QQQM",      name:"Invesco NASDAQ 100", layer:"เร่ง",val:A.QQQM, cost:COST_THB.QQQM, det:{หุ้นคงเหลือ:fmtE(SH.QQQM,7),ราคาปัจจุบัน:"$"+fmtE(P.QQQM,2),ต้นทุน_หุ้น:"$271.6794",ต้นทุนรวม:"$276.90"}},
     {sym:"TMDX",      name:"TransMedics Group",  layer:"ซิ่ง", val:P.TMDX*SH.TMDX*USD_THB, cost:COST_THB.TMDX, det:{หุ้นคงเหลือ:fmtE(SH.TMDX,7),ราคาปัจจุบัน:"$"+fmtE(P.TMDX,2),ต้นทุน_หุ้น:"$98.9504",ต้นทุนรวม:"$61.06"}},
+    {sym:"ARM",  name:"ARM Holdings",  layer:"ซิ่ง", val:P.ARM*SH.ARM*USD_THB,  cost:2031.98, det:{หุ้นคงเหลือ:fmtE(SH.ARM,7),ราคาปัจจุบัน:"$"+fmtE(P.ARM,2),ต้นทุน_หุ้น:"$218.1243",ต้นทุนรวม:"$62.14"}},
+    {sym:"NVTS", name:"Nvni Group",   layer:"ซิ่ง", val:P.NVTS*SH.NVTS*USD_THB, cost:1019.24, det:{หุ้นคงเหลือ:fmtE(SH.NVTS,7),ราคาปัจจุบัน:"$"+fmtE(P.NVTS,2),ต้นทุน_หุ้น:"$15.3560",ต้นทุนรวม:"$31.17"}},
     {sym:"NVDA",      name:"NVIDIA",             layer:"เร่ง",val:A.NVDA, cost:COST_THB.NVDA, det:{หุ้นคงเหลือ:fmtE(SH.NVDA,7),ราคาปัจจุบัน:"$"+fmtE(P.NVDA,2),ต้นทุน_หุ้น:"$198.4378",ต้นทุนรวม:"$335.56"}},
   ];
   document.getElementById("holdings-list").innerHTML=HOLD.map((h,i)=>{
