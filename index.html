@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ฃ<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -428,15 +428,15 @@ function parseCSV(txt){
   const toNum = s => parseFloat(String(s).replace(/[$฿,\s]/g,""));
 
   // Scan หา Ticker ใน row แล้วเอาราคาจาก column ถัดไป
-  const findPrice = (ticker) => {
+  const findPrice = (ticker, minPrice=50) => {
     for(let i=0; i<rows.length; i++){
       const row = rows[i];
       for(let c=0; c<row.length; c++){
         if(row[c].trim() === ticker){
-          // ลองทุก column ถัดจาก ticker
-          for(let k=c+1; k<row.length; k++){
+          // เอาแค่ 2 columns ถัดไป เพื่อกัน %change ที่อยู่ column ไกลออกไป
+          for(let k=c+1; k<=c+2 && k<row.length; k++){
             const v = toNum(row[k]);
-            if(!isNaN(v) && v >= 50) return v; // ราคาหุ้น US > $50 (กรอง %change ออก)
+            if(!isNaN(v) && v >= minPrice) return v;
           }
         }
       }
@@ -477,7 +477,7 @@ function parseCSV(txt){
   if(nvda > 1)   P.NVDA = nvda;
   const arm = findPrice("ARM");
   if(arm >= 50)  P.ARM  = arm;
-  const nvts = findPrice("NVTS");
+  const nvts = findPrice("NVTS", 5);
   if(nvts >= 5)  P.NVTS = nvts;
   if(tmdx > 1)   P.TMDX = tmdx;
   if(kkp  > 0.1) P.KKP  = kkp;
